@@ -1,0 +1,764 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>浦和美園ピアノ教室 — ただいま、って言いたくなるピアノ教室</title>
+<meta name="description" content="浦和美園にある、お茶の飲める小さな音楽教室。講師歴30年・のべ2,000人の実績。">
+<meta property="og:title" content="浦和美園ピアノ教室">
+<meta property="og:description" content="浦和美園にある、お茶の飲める小さな音楽教室。講師歴30年、のべ2,000人を教えてきた先生がお届けする、実家のような音楽教室。">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://urawamisono-piano.com">
+<link rel="canonical" href="https://urawamisono-piano.com">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+/* ── Airbnb Design System adapted for Piano School ── */
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+
+:root {
+  --bg: #ffffff;
+  --text: #222222;
+  --text-secondary: #6a6a6a;
+  --text-tertiary: #929292;
+  --accent: #C67B5C;
+  --accent-hover: #B56A4B;
+  --accent-light: #FAEEE9;
+  --surface: #f2f2f2;
+  --border: #dddddd;
+  --shadow-card: rgba(0,0,0,0.02) 0px 0px 0px 1px, rgba(0,0,0,0.04) 0px 2px 6px, rgba(0,0,0,0.1) 0px 4px 8px;
+  --shadow-hover: rgba(0,0,0,0.08) 0px 4px 12px;
+  --shadow-float: rgba(0,0,0,0.12) 0px 6px 16px;
+  --radius-sm: 8px;
+  --radius-md: 14px;
+  --radius-lg: 20px;
+  --radius-xl: 32px;
+  --radius-full: 9999px;
+  --font: "Plus Jakarta Sans", "Hiragino Sans", "Hiragino Kaku Gothic ProN", "Noto Sans JP", sans-serif;
+  --max-w: 1128px;
+}
+
+body {
+  font-family: var(--font);
+  color: var(--text);
+  background: var(--bg);
+  line-break: strict; word-break: normal;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+a { color: var(--text); text-decoration: none; }
+img { display: block; width: 100%; height: 100%; object-fit: cover; }
+
+/* ── Nav ── */
+.nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  background: var(--bg);
+  border-bottom: 1px solid var(--border);
+  transition: box-shadow .2s;
+}
+.nav.scrolled { box-shadow: 0 2px 8px rgba(0,0,0,.06); }
+.nav-inner {
+  max-width: var(--max-w); margin: 0 auto;
+  padding: 0 24px; height: 66px;
+  display: flex; align-items: center; justify-content: space-between;
+}
+.nav-logo {
+  font-size: 1.05rem; font-weight: 700;
+  letter-spacing: -.02em; color: var(--text);
+}
+.nav-logo span { color: var(--accent); }
+.nav-links { display: flex; gap: 24px; list-style: none; }
+.nav-links a {
+  font-size: .88rem; font-weight: 500; color: var(--text);
+  padding: 8px 0; position: relative;
+}
+.nav-links a:hover { color: var(--accent); }
+.nav-links a::after {
+  content: ""; position: absolute; bottom: 0; left: 0;
+  width: 0; height: 2px; background: var(--accent); border-radius: 1px;
+  transition: width .25s;
+}
+.nav-links a:hover::after { width: 100%; }
+
+.nav-toggle {
+  display: none; background: none; border: none; cursor: pointer;
+  width: 28px; height: 20px; position: relative;
+}
+.nav-toggle span {
+  display: block; width: 100%; height: 2px;
+  background: var(--text); border-radius: 2px;
+  position: absolute; left: 0; transition: all .3s;
+}
+.nav-toggle span:nth-child(1) { top: 0; }
+.nav-toggle span:nth-child(2) { top: 9px; }
+.nav-toggle span:nth-child(3) { bottom: 0; }
+.nav-toggle.active span:nth-child(1) { top: 9px; transform: rotate(45deg); }
+.nav-toggle.active span:nth-child(2) { opacity: 0; }
+.nav-toggle.active span:nth-child(3) { bottom: 9px; transform: rotate(-45deg); }
+
+/* ── Hero ── */
+.hero {
+  padding-top: 66px;
+  position: relative; overflow: hidden;
+  background: linear-gradient(135deg, #FFF8F4 0%, #FFF0E8 40%, #FAEEE9 100%);
+}
+.hero-inner {
+  max-width: var(--max-w); margin: 0 auto; padding: 80px 24px 60px;
+  display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: center;
+}
+.hero-content { max-width: 520px; }
+.hero-badge {
+  display: inline-block;
+  font-size: .75rem; font-weight: 600;
+  color: var(--accent); background: var(--accent-light);
+  padding: 6px 14px; border-radius: var(--radius-full);
+  margin-bottom: 20px; letter-spacing: .02em;
+}
+.hero-copy {
+  font-size: 2.6rem; font-weight: 700;
+  line-height: 1.15; letter-spacing: -.03em;
+  margin-bottom: 20px; color: var(--text);
+}
+.hero-copy em {
+  font-style: normal;
+  background: linear-gradient(135deg, var(--accent), #D4956F);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+.hero-sub {
+  font-size: 1.05rem; color: var(--text-secondary);
+  line-height: 1.6; margin-bottom: 32px;
+}
+.hero-cta {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 14px 28px;
+  background: var(--text); color: #fff;
+  font-size: .95rem; font-weight: 600;
+  border-radius: var(--radius-sm);
+  transition: all .2s;
+}
+.hero-cta:hover { background: var(--accent); color: #fff; box-shadow: var(--shadow-hover); }
+.hero-cta svg { width: 18px; height: 18px; }
+
+/* Hero image area */
+.hero-visual {
+  position: relative; border-radius: var(--radius-xl);
+  overflow: hidden; aspect-ratio: 4/3;
+  box-shadow: var(--shadow-float);
+}
+.hero-visual-placeholder {
+  width: 100%; height: 100%;
+  background: linear-gradient(135deg, #E8D5C4 0%, #D4BFA8 50%, #C9AE96 100%);
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center; gap: 12px;
+  color: #8B7355; font-size: .9rem; font-weight: 500;
+}
+.hero-visual-placeholder svg { width: 48px; height: 48px; opacity: .5; }
+
+/* Floating decorative shapes */
+.hero-deco {
+  position: absolute; border-radius: 50%; pointer-events: none;
+}
+.hero-deco-1 {
+  width: 180px; height: 180px;
+  background: radial-gradient(circle, rgba(198,123,92,.08) 0%, transparent 70%);
+  top: 10%; right: -40px;
+}
+.hero-deco-2 {
+  width: 120px; height: 120px;
+  background: radial-gradient(circle, rgba(198,123,92,.06) 0%, transparent 70%);
+  bottom: 15%; left: -30px;
+}
+
+/* ── Section base ── */
+.section { padding: 80px 24px; }
+.section-inner { max-width: var(--max-w); margin: 0 auto; }
+.section-head { text-align: center; margin-bottom: 48px; }
+.section-label {
+  font-size: .75rem; font-weight: 700;
+  color: var(--accent); letter-spacing: .08em;
+  text-transform: uppercase; margin-bottom: 8px;
+}
+.section-title {
+  font-size: 1.75rem; font-weight: 700;
+  letter-spacing: -.02em; line-height: 1.3;
+}
+.section-desc {
+  font-size: .95rem; color: var(--text-secondary);
+  margin-top: 12px; max-width: 520px; margin-inline: auto;
+  line-height: 1.6;
+}
+
+/* ── Greeting ── */
+.greeting-grid {
+  display: grid; grid-template-columns: 280px 1fr; gap: 56px; align-items: start;
+}
+.greeting-photo {
+  border-radius: var(--radius-xl); overflow: hidden;
+  box-shadow: var(--shadow-card); aspect-ratio: 3/4;
+}
+.greeting-photo-placeholder {
+  width: 100%; height: 100%;
+  background: linear-gradient(180deg, #E8DDD3 0%, #D9CCBE 100%);
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center; gap: 8px;
+  color: #8B7B6B; font-size: .82rem; font-weight: 500;
+}
+.greeting-photo-placeholder svg { width: 40px; height: 40px; opacity: .4; }
+
+.greeting-text p {
+  font-size: .95rem; color: var(--text-secondary);
+  margin-bottom: 1.1em; line-height: 1.75;
+}
+.greeting-text p:last-child { margin-bottom: 0; }
+.greeting-text strong { color: var(--text); font-weight: 600; }
+
+/* ── Courses ── */
+.section--warm { background: #FAFAF8; }
+.courses-grid {
+  display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px;
+}
+.course-card {
+  background: var(--bg);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-card);
+  overflow: hidden;
+  transition: transform .2s, box-shadow .2s;
+}
+.course-card:hover { transform: translateY(-2px); box-shadow: var(--shadow-hover); }
+
+.course-card-image {
+  height: 140px; position: relative; overflow: hidden;
+}
+.course-card-image-inner {
+  width: 100%; height: 100%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 2rem; opacity: .4;
+}
+.course-card-image-inner.senior { background: linear-gradient(135deg, #EDE8DF, #DED4C4); color: #7A6E5D; }
+.course-card-image-inner.adult { background: linear-gradient(135deg, #E2EBDD, #CDD9C5); color: #5C6B52; }
+.course-card-image-inner.child { background: linear-gradient(135deg, #FFF3E0, #FFE4BF); color: #A67C3D; }
+.course-card-image-inner.baby { background: linear-gradient(135deg, #F0E0E8, #E0CDD8); color: #8B5A6B; }
+
+.course-card-badge {
+  position: absolute; top: 12px; left: 12px;
+  background: var(--bg); color: var(--text);
+  font-size: .72rem; font-weight: 600;
+  padding: 4px 10px; border-radius: var(--radius-full);
+  box-shadow: 0 1px 4px rgba(0,0,0,.1);
+}
+
+.course-card-body { padding: 20px 22px 24px; }
+.course-card-name {
+  font-size: 1.15rem; font-weight: 600;
+  letter-spacing: -.01em; margin-bottom: 4px;
+}
+.course-card-price {
+  font-size: .88rem; color: var(--accent); font-weight: 600;
+  margin-bottom: 12px;
+}
+.course-card-price span { font-size: 1.2rem; }
+.course-card-desc {
+  font-size: .85rem; color: var(--text-secondary);
+  line-height: 1.7;
+}
+.course-card-note {
+  font-size: .78rem; color: var(--text-tertiary);
+  margin-top: 12px; padding-top: 12px;
+  border-top: 1px solid var(--border);
+}
+
+/* Entry fee bar */
+.entry-fee-bar {
+  text-align: center; margin-top: 32px;
+  padding: 16px; background: var(--surface);
+  border-radius: var(--radius-md);
+  font-size: .88rem; color: var(--text-secondary); font-weight: 500;
+}
+.entry-fee-bar strong { color: var(--text); }
+
+/* ── Policy ── */
+.policy-card {
+  max-width: 640px; margin: 0 auto;
+  background: var(--bg);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-card);
+  padding: 36px 40px;
+}
+.policy-card h3 {
+  font-size: 1.1rem; font-weight: 700;
+  margin-bottom: 16px; letter-spacing: -.01em;
+}
+.policy-card p {
+  font-size: .9rem; color: var(--text-secondary);
+  line-height: 1.7; margin-bottom: 1em;
+}
+.policy-card p:last-child { margin-bottom: 0; }
+.policy-sep {
+  width: 100%; height: 1px;
+  background: var(--border); margin: 20px 0;
+}
+.policy-card ul { list-style: none; padding: 0; }
+.policy-card li {
+  font-size: .88rem; color: var(--text-secondary);
+  padding: 5px 0 5px 22px; position: relative; line-height: 1.7;
+}
+.policy-card li::before {
+  content: ""; position: absolute; left: 0; top: 13px;
+  width: 8px; height: 8px; border-radius: 50%;
+  background: var(--accent-light);
+  border: 2px solid var(--accent);
+}
+
+/* ── Profile ── */
+.profile-grid {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 56px; align-items: center;
+}
+.profile-visual {
+  border-radius: var(--radius-xl); overflow: hidden;
+  box-shadow: var(--shadow-card); aspect-ratio: 4/3;
+}
+.profile-visual-placeholder {
+  width: 100%; height: 100%;
+  background: linear-gradient(180deg, #E0D8CF 0%, #D0C4B5 100%);
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center; gap: 8px;
+  color: #7A6E5D; font-size: .82rem; font-weight: 500;
+}
+.profile-visual-placeholder svg { width: 40px; height: 40px; opacity: .4; }
+
+.profile-name {
+  font-size: 1.5rem; font-weight: 700;
+  letter-spacing: -.02em; margin-bottom: 4px;
+}
+.profile-role {
+  font-size: .88rem; color: var(--text-secondary);
+  margin-bottom: 24px;
+}
+.credential-list { list-style: none; padding: 0; }
+.credential-list li {
+  font-size: .88rem; color: var(--text-secondary);
+  padding: 8px 0 8px 24px; position: relative;
+  border-bottom: 1px solid #f0f0f0;
+  line-height: 1.6;
+}
+.credential-list li:last-child { border-bottom: none; }
+.credential-list li::before {
+  content: ""; position: absolute; left: 0; top: 17px;
+  width: 8px; height: 8px; border-radius: 50%;
+  border: 2px solid var(--accent);
+}
+.credential-list li strong { color: var(--text); font-weight: 600; }
+
+/* ── Contact ── */
+.section--accent { background: var(--accent-light); }
+.contact-grid {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 56px; align-items: start;
+}
+.contact-info h3 {
+  font-size: 1.3rem; font-weight: 700;
+  letter-spacing: -.02em; margin-bottom: 16px;
+}
+.contact-info p {
+  font-size: .9rem; color: var(--text-secondary);
+  line-height: 1.7; margin-bottom: 1em;
+}
+.contact-detail { list-style: none; padding: 0; margin-top: 24px; }
+.contact-detail li {
+  font-size: .88rem; color: var(--text-secondary);
+  padding: 10px 0; border-bottom: 1px solid rgba(0,0,0,.06);
+  display: flex; align-items: center; gap: 10px;
+}
+.contact-detail li svg { width: 18px; height: 18px; color: var(--accent); flex-shrink: 0; }
+
+.contact-form-card {
+  background: var(--bg);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-card);
+  padding: 32px;
+}
+.form-group { margin-bottom: 16px; }
+.form-label {
+  display: block; font-size: .82rem; font-weight: 600;
+  color: var(--text); margin-bottom: 6px;
+}
+.form-label .required { color: var(--accent); font-size: .72rem; }
+.form-input, .form-select, .form-textarea {
+  width: 100%; padding: 12px 14px;
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius-sm);
+  font-size: .88rem; color: var(--text);
+  font-family: var(--font);
+  transition: border-color .2s, box-shadow .2s;
+  background: var(--bg);
+  -webkit-appearance: none; appearance: none;
+}
+.form-input:focus, .form-select:focus, .form-textarea:focus {
+  outline: none; border-color: var(--accent);
+  box-shadow: 0 0 0 2px rgba(198,123,92,.15);
+}
+.form-select {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%236a6a6a' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat; background-position: right 14px center;
+  padding-right: 36px;
+}
+.form-textarea { min-height: 120px; resize: vertical; }
+.form-submit {
+  width: 100%; padding: 14px;
+  background: var(--text); color: #fff;
+  font-size: .9rem; font-weight: 600;
+  border: none; border-radius: var(--radius-sm);
+  cursor: pointer; transition: all .2s;
+  font-family: var(--font);
+}
+.form-submit:hover { background: var(--accent); box-shadow: var(--shadow-hover); }
+
+/* ── Footer ── */
+.footer { background: var(--text); color: rgba(255,255,255,.7); padding: 48px 24px; }
+.footer-inner {
+  max-width: var(--max-w); margin: 0 auto;
+  display: flex; justify-content: space-between; align-items: start;
+  flex-wrap: wrap; gap: 32px;
+}
+.footer-brand { max-width: 300px; }
+.footer-logo { font-size: 1.05rem; font-weight: 700; color: #fff; margin-bottom: 10px; }
+.footer-logo span { color: var(--accent); }
+.footer-desc { font-size: .82rem; line-height: 1.7; }
+.footer-links { display: flex; gap: 40px; }
+.footer-col h4 { font-size: .78rem; font-weight: 700; color: #fff; margin-bottom: 12px; letter-spacing: .04em; }
+.footer-col a {
+  display: block; font-size: .82rem; color: rgba(255,255,255,.6);
+  padding: 4px 0; transition: color .2s;
+}
+.footer-col a:hover { color: var(--accent); }
+.footer-bottom {
+  max-width: var(--max-w); margin: 32px auto 0;
+  padding-top: 24px; border-top: 1px solid rgba(255,255,255,.1);
+  font-size: .75rem; color: rgba(255,255,255,.35);
+  text-align: center;
+}
+
+/* ── Responsive ── */
+@media (max-width: 768px) {
+  .nav-links { display: none; }
+  .nav-toggle { display: block; }
+  .nav-links.open {
+    display: flex; flex-direction: column;
+    position: absolute; top: 66px; left: 0; right: 0;
+    background: var(--bg); padding: 16px 24px 24px; gap: 16px;
+    border-bottom: 1px solid var(--border);
+    box-shadow: 0 4px 12px rgba(0,0,0,.08);
+  }
+  .hero-inner { grid-template-columns: 1fr; padding: 48px 20px 40px; }
+  .hero-copy { font-size: 2rem; }
+  .hero-visual { display: none; }
+  .greeting-grid { grid-template-columns: 1fr; gap: 28px; }
+  .greeting-photo { max-width: 240px; margin: 0 auto; }
+  .courses-grid { grid-template-columns: 1fr; }
+  .profile-grid { grid-template-columns: 1fr; gap: 28px; }
+  .contact-grid { grid-template-columns: 1fr; gap: 32px; }
+  .policy-card { padding: 24px; }
+  .section { padding: 56px 20px; }
+  .footer-inner { flex-direction: column; }
+}
+</style>
+</head>
+<body>
+
+<!-- Nav -->
+<nav class="nav" id="nav">
+  <div class="nav-inner">
+    <a href="#" class="nav-logo">浦和美園<span>ピアノ教室</span></a>
+    <button class="nav-toggle" id="navToggle" aria-label="メニュー"><span></span><span></span><span></span></button>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="#about">教室の想い</a></li>
+      <li><a href="#courses">コース</a></li>
+      <li><a href="#profile">講師紹介</a></li>
+      <li><a href="#contact">お問い合わせ</a></li>
+    </ul>
+  </div>
+</nav>
+
+<!-- Hero -->
+<section class="hero">
+  <div class="hero-deco hero-deco-1"></div>
+  <div class="hero-deco hero-deco-2"></div>
+  <div class="hero-inner">
+    <div class="hero-content">
+      <div class="hero-badge">URAWA-MISONO PIANO</div>
+      <h1 class="hero-copy">ただいま、って<br>言いたくなる<br><em>ピアノ教室。</em></h1>
+      <p class="hero-sub">浦和美園にある、お茶の飲める小さな音楽教室。講師歴30年の先生がお届けする、実家のような居心地の音楽レッスン。</p>
+      <a href="#contact" class="hero-cta">
+        お問い合わせ
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      </a>
+    </div>
+    <div class="hero-visual">
+      <div class="hero-visual-placeholder">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg>
+        教室の写真
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Greeting -->
+<section class="section" id="about">
+  <div class="section-inner">
+    <div class="section-head">
+      <p class="section-label">GREETING</p>
+      <h2 class="section-title">教室の想い</h2>
+    </div>
+    <div class="greeting-grid">
+      <div class="greeting-photo">
+        <div class="greeting-photo-placeholder">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="8" r="4"/><path d="M6 21v-2a4 4 0 014-4h4a4 4 0 014 4v2"/></svg>
+          先生の写真
+        </div>
+      </div>
+      <div class="greeting-text">
+        <p>はじめまして。</p>
+        <p>ピアノ教室を開くことになって、一番に考えたのは「どんな場所にしたいか」でした。</p>
+        <p>コンクールのための技術を身につける場所。受験に向けたレッスンをする場所。そういう教室もいいけれど、わたしが作りたいは<strong>違う形</strong>でした。</p>
+        <p>30年間、のべ2,000人以上の方にピアノを教えてきました。小さな子供から大人の方まで、いろんな方と向き合ってきて気づいたことがあります。<strong>「ピアノを弾けるようになりたい」</strong>—その言葉の奥には、たいてい別の気持ちが隠れています。</p>
+        <p>「なにか楽しいことを始めたい」<br>「自分のために使える時間が欲しい」<br>「子どもの頃に習っていたピアノを、もう一度」</p>
+        <p>そんな気持ちを抱えて教室のドアを開けた方に、「あ、なんだかいいところ」「思ってたより気楽でいいな」「また来たくなる」そう感じてもらえる場所にしたい。</p>
+        <p>だから、ここではお茶を淹れてお待ちしています。レッスン前の子どもたち、送ってきたお母さんたち、のんびり訪れる大人の方たち。<strong>みんなで「おかえり」と言える場所</strong>に。</p>
+        <p>浦和美園で、小さな音楽教室を始めます。お茶でも飲みに来る感覚で、気軽に覗いてみてください。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Courses -->
+<section class="section section--warm" id="courses">
+  <div class="section-inner">
+    <div class="section-head">
+      <p class="section-label">COURSES</p>
+      <h2 class="section-title">コースご案内</h2>
+      <p class="section-desc">こどもから大人まで。自分のペースで、音楽を愉しむためのコースです。</p>
+    </div>
+    <div class="courses-grid">
+      <div class="course-card">
+        <div class="course-card-image">
+          <div class="course-card-image-inner senior">
+            <svg viewBox="0 0 24 24" width="40" height="40" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 3v10.55A4 4 0 1 0 14 17V7h4"/></svg>
+          </div>
+          <span class="course-card-badge">シニア・年配の方</span>
+        </div>
+        <div class="course-card-body">
+          <h3 class="course-card-name">大人のプレミアムコース</h3>
+          <p class="course-card-price">月1回 30分 ／ <span>5,000円</span></p>
+          <p class="course-card-desc">月に1回、30分。それだけで十分です。ゆっくりお話ししながら、好きな曲を1曲弾けるようになる。「上達」じゃなくて「愉しむ」ための時間。お茶とおしゃべりと音楽。月に1回の、あなたのサードプレイス。</p>
+        </div>
+      </div>
+      <div class="course-card">
+        <div class="course-card-image">
+          <div class="course-card-image-inner adult">
+            <svg viewBox="0 0 24 24" width="40" height="40" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg>
+          </div>
+          <span class="course-card-badge">大人の方</span>
+        </div>
+        <div class="course-card-body">
+          <h3 class="course-card-name">エグゼクティブ個人枠</h3>
+          <p class="course-card-price">月1回 45〜60分 ／ <span>8,000円</span></p>
+          <p class="course-card-desc">仕事帰りに、家事の合間に。1ヶ月に1回、自分のためだけの時間を持つ。好きな曲、弾いてみたかった曲、それぞれのペースで進めます。「いま始めるのは遅すぎるかしら」—大丈夫、そんなことはありません。</p>
+        </div>
+      </div>
+      <div class="course-card">
+        <div class="course-card-image">
+          <div class="course-card-image-inner child">
+            <svg viewBox="0 0 24 24" width="40" height="40" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg>
+          </div>
+          <span class="course-card-badge">こども</span>
+        </div>
+        <div class="course-card-body">
+          <h3 class="course-card-name">こども音楽コース</h3>
+          <p class="course-card-price">月3〜4回 30分 ／ <span>12,000円〜</span></p>
+          <p class="course-card-desc">ピアノはもちろん、エレクトーンやほかの楽器にも触れます。「弾く」だけじゃなく「作る」ことも学ぶから、「わたし、曲を作れるんだ!」という驚きがあります。</p>
+          <p class="course-card-note">作曲・他楽器体験も含む</p>
+        </div>
+      </div>
+      <div class="course-card">
+        <div class="course-card-image">
+          <div class="course-card-image-inner baby">
+            <svg viewBox="0 0 24 24" width="40" height="40" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 3v10.55A4 4 0 1 0 14 17V7h4"/></svg>
+          </div>
+          <span class="course-card-badge">未就学児</span>
+        </div>
+        <div class="course-card-body">
+          <h3 class="course-card-name">グループ・リトミック</h3>
+          <p class="course-card-price">月3回 1回40分 ／ <span>月額3,000円</span></p>
+          <p class="course-card-desc">小さなお子さんと一緒に、音楽に触れる最初のステップ。体を動かしながらリズムを感じて、歌を歌って、音の世界を「たのしい!」と思える時間。ママ同士のお話もはずむ、和やかな雰囲気のレッスン。</p>
+          <p class="course-card-note">火・水・金 午前 ／ 1回1,000円×月3回</p>
+        </div>
+      </div>
+    </div>
+    <div class="entry-fee-bar">入会金　<strong>一律 10,000円</strong></div>
+  </div>
+</section>
+
+<!-- Policy -->
+<section class="section" id="policy">
+  <div class="section-inner">
+    <div class="section-head">
+      <p class="section-label">POLICY</p>
+      <h2 class="section-title">お伝えしておきたいこと</h2>
+    </div>
+    <div class="policy-card">
+      <p>当教室は「アットホーム」を大切にしていますが、「安かろう悪かろう」ではありません。</p>
+      <p>講師歴30年、のべ2,000人を教えてきた経験と技術があります。だからこそ、しっかりとした料金設定で、しっかりとしたレッスンをお約束します。</p>
+      <div class="policy-sep"></div>
+      <p>「とにかく安く済ませたい」「子どもを預ける場所として使いたい」—そういう目的の方には、残念ながら合わない教室です。</p>
+      <div class="policy-sep"></div>
+      <p>その代わり、こういう方には長く通っていただけています。</p>
+      <ul>
+        <li>子どもの可能性を、音楽を通じて広げたい</li>
+        <li>自分のために、音楽の時間を持ちたい</li>
+        <li>ピアノの音に触れながら、ゆったり過ごしたい</li>
+      </ul>
+      <p>そういう想いに、しっかり向き合う教室でありたいと思っています。</p>
+    </div>
+  </div>
+</section>
+
+<!-- Profile -->
+<section class="section section--warm" id="profile">
+  <div class="section-inner">
+    <div class="section-head">
+      <p class="section-label">TEACHER</p>
+      <h2 class="section-title">講師紹介</h2>
+    </div>
+    <div class="profile-grid">
+      <div>
+        <div class="profile-visual">
+          <div class="profile-visual-placeholder">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="8" r="4"/><path d="M6 21v-2a4 4 0 014-4h4a4 4 0 014 4v2"/></svg>
+            先生の写真
+          </div>
+        </div>
+      </div>
+      <div>
+        <h3 class="profile-name">講師名</h3>
+        <p class="profile-role">浦和美園ピアノ教室 代表</p>
+        <ul class="credential-list">
+          <li>洗足学園音楽大学 ピアノ科 卒業</li>
+          <li>中学・高校 音楽教員免許 取得</li>
+          <li>ヤマハ音楽教室 システム講師</li>
+          <li>2024年5月末退職（システム講師はグループレッスンを担当）</li>
+          <li>講師歴 <strong>30年</strong></li>
+          <li>のべ <strong>2,000人</strong> レッスン実績</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Contact -->
+<section class="section section--accent" id="contact">
+  <div class="section-inner">
+    <div class="section-head">
+      <p class="section-label">CONTACT</p>
+      <h2 class="section-title">お問い合わせ</h2>
+      <p class="section-desc">まずは気軽にご連絡ください。お茶を飲みながら、ゆっくりお話ししましょう。</p>
+    </div>
+    <div class="contact-grid">
+      <div class="contact-info">
+        <h3>お気軽にどうぞ</h3>
+        <p>見学も受け付けています。教室の雰囲気をそのまま感じてください。お茶を淹れてお待ちしています。</p>
+        <ul class="contact-detail">
+          <li>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+            埼玉県さいたま市緑区浦和美園
+          </li>
+          <li>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
+            火〜土曜日 レッスン開催
+          </li>
+          <li>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><path d="M16 12h-4V8"/></svg>
+            駐車場完備
+          </li>
+        </ul>
+      </div>
+      <div class="contact-form-card">
+        <form action="#" method="POST">
+          <div class="form-group">
+            <label class="form-label">お名前<span class="required">*</span></label>
+            <input type="text" name="name" class="form-input" required placeholder="山田 はなこ">
+          </div>
+          <div class="form-group">
+            <label class="form-label">メールアドレス<span class="required">*</span></label>
+            <input type="email" name="email" class="form-input" required placeholder="mail@example.com">
+          </div>
+          <div class="form-group">
+            <label class="form-label">お電話番号</label>
+            <input type="tel" name="phone" class="form-input" placeholder="090-1234-5678">
+          </div>
+          <div class="form-group">
+            <label class="form-label">ご興味のあるコース</label>
+            <select name="course" class="form-select">
+              <option value="">選択してください</option>
+              <option value="premium">大人のプレミアムコース（月1回 5,000円）</option>
+              <option value="executive">エグゼクティブ個人枠（月1回 8,000円）</option>
+              <option value="child">こども音楽コース（月3〜4回 12,000円〜）</option>
+              <option value="rhythmic">グループ・リトミック（月3回 3,000円）</option>
+              <option value="other">その他・見学希望</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="form-label">ご質問・ご要望</label>
+            <textarea name="message" class="form-textarea" placeholder="見学希望の日時や、気になることなど自由にお書きください。"></textarea>
+          </div>
+          <button type="submit" class="form-submit">送信する</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer class="footer">
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <p class="footer-logo">浦和美園<span>ピアノ教室</span></p>
+      <p class="footer-desc">浦和美園にある、お茶の飲める小さな音楽教室。講師歴30年、のべ2,000人を教えてきた先生がお届けする、実家のような居心地の音楽レッスン。</p>
+    </div>
+    <div class="footer-links">
+      <div class="footer-col">
+        <h4>MENU</h4>
+        <a href="#about">教室の想い</a>
+        <a href="#courses">コースご案内</a>
+        <a href="#profile">講師紹介</a>
+        <a href="#contact">お問い合わせ</a>
+      </div>
+      <div class="footer-col">
+        <h4>COURSES</h4>
+        <a href="#courses">プレミアムコース</a>
+        <a href="#courses">エグゼクティブ枠</a>
+        <a href="#courses">こども音楽コース</a>
+        <a href="#courses">グループ・リトミック</a>
+      </div>
+    </div>
+  </div>
+  <div class="footer-bottom">&copy; 浦和美園ピアノ教室</div>
+</footer>
+
+<script>
+// Nav scroll
+window.addEventListener('scroll', () => {
+  document.getElementById('nav').classList.toggle('scrolled', window.scrollY > 10);
+}, { passive: true });
+
+// Mobile menu
+const toggle = document.getElementById('navToggle');
+const links = document.getElementById('navLinks');
+toggle.addEventListener('click', () => { toggle.classList.toggle('active'); links.classList.toggle('open'); });
+links.querySelectorAll('a').forEach(a => { a.addEventListener('click', () => { toggle.classList.remove('active'); links.classList.remove('open'); }); });
+</script>
+</body>
+</html>
