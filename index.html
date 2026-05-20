@@ -14,7 +14,6 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@400;500;700&display=swap" rel="stylesheet">
 <style>
-/* ── Reset & Base ── */
 *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 html { scroll-behavior: smooth; font-size: 16px; }
 body {
@@ -25,9 +24,9 @@ body {
   word-break: normal;
   line-height: 1.8;
   -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
 }
 
-/* ── Design Tokens ── */
 :root {
   --cream: #FAF6F0;
   --warm-bg: #F3EBE0;
@@ -48,8 +47,28 @@ body {
   --max-w-wide: 1000px;
 }
 
-a { color: var(--accent-dark); text-decoration: none; transition: color .2s; }
+a { color: var(--accent-dark); text-decoration: none; }
 a:hover { color: var(--gold); }
+
+/* ── Loading Screen ── */
+.loader {
+  position: fixed; inset: 0; z-index: 9999;
+  background: var(--cream);
+  display: flex; align-items: center; justify-content: center;
+  flex-direction: column;
+}
+.loader-note {
+  font-size: 2rem;
+  opacity: 0;
+  color: var(--accent);
+}
+.loader-text {
+  font-family: var(--serif);
+  font-size: .9rem;
+  color: var(--text-light);
+  margin-top: 16px;
+  opacity: 0;
+}
 
 /* ── Navigation ── */
 .nav {
@@ -57,47 +76,46 @@ a:hover { color: var(--gold); }
   background: rgba(250,246,240,.92);
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
-  border-bottom: 1px solid var(--border);
-  transition: box-shadow .3s;
+  border-bottom: 1px solid transparent;
+  will-change: transform;
 }
-.nav.scrolled { box-shadow: 0 2px 16px rgba(61,53,41,.08); }
+.nav.scrolled {
+  border-bottom-color: var(--border);
+  box-shadow: 0 2px 16px rgba(61,53,41,.06);
+}
 .nav-inner {
   max-width: var(--max-w-wide);
-  margin: 0 auto;
-  padding: 0 24px;
+  margin: 0 auto; padding: 0 24px;
   display: flex; align-items: center; justify-content: space-between;
   height: 64px;
 }
 .nav-logo {
   font-family: var(--serif);
   font-size: 1.05rem; font-weight: 500;
-  color: var(--text);
-  letter-spacing: .04em;
+  color: var(--text); letter-spacing: .04em;
+  opacity: 0;
 }
 .nav-links { display: flex; gap: 28px; list-style: none; }
 .nav-links a {
   font-size: .82rem; color: var(--text-light);
-  letter-spacing: .02em;
-  position: relative;
+  letter-spacing: .02em; position: relative;
+  opacity: 0;
 }
 .nav-links a::after {
-  content: ""; position: absolute; bottom: -4px; left: 0;
+  content: ""; position: absolute; bottom: -4px; left: 50%;
   width: 0; height: 1.5px; background: var(--accent);
-  transition: width .3s;
+  transition: width .3s, left .3s;
 }
-.nav-links a:hover::after { width: 100%; }
+.nav-links a:hover::after { width: 100%; left: 0; }
 
 .nav-toggle {
-  display: none;
-  background: none; border: none; cursor: pointer;
-  width: 28px; height: 20px;
-  position: relative;
+  display: none; background: none; border: none; cursor: pointer;
+  width: 28px; height: 20px; position: relative;
 }
 .nav-toggle span {
   display: block; width: 100%; height: 2px;
   background: var(--text); border-radius: 2px;
-  position: absolute; left: 0;
-  transition: all .3s;
+  position: absolute; left: 0; transition: all .3s;
 }
 .nav-toggle span:nth-child(1) { top: 0; }
 .nav-toggle span:nth-child(2) { top: 9px; }
@@ -112,8 +130,7 @@ a:hover { color: var(--gold); }
   display: flex; align-items: center; justify-content: center;
   text-align: center;
   padding: 120px 24px 80px;
-  position: relative;
-  overflow: hidden;
+  position: relative; overflow: hidden;
 }
 .hero::before {
   content: "";
@@ -124,126 +141,122 @@ a:hover { color: var(--gold); }
     linear-gradient(180deg, var(--cream) 0%, #F0E8DA 100%);
 }
 .hero-content { position: relative; z-index: 1; max-width: 640px; }
+
 .hero-label {
   font-size: .8rem; color: var(--accent);
   letter-spacing: .15em; margin-bottom: 24px;
-  text-transform: uppercase;
+  opacity: 0;
 }
 .hero-copy {
   font-family: var(--serif);
   font-size: clamp(1.9rem, 5vw, 3rem);
-  font-weight: 500;
-  line-height: 1.5;
-  color: var(--text);
-  margin-bottom: 24px;
+  font-weight: 500; line-height: 1.5;
+  color: var(--text); margin-bottom: 24px;
+}
+.hero-copy .char {
+  display: inline-block;
+  opacity: 0;
+  transform: translateY(30px);
 }
 .hero-copy em {
-  font-style: normal;
-  color: var(--accent-dark);
+  font-style: normal; color: var(--accent-dark);
 }
 .hero-sub {
-  font-size: 1rem;
-  color: var(--text-light);
-  line-height: 1.9;
-  margin-bottom: 40px;
+  font-size: 1rem; color: var(--text-light);
+  line-height: 1.9; margin-bottom: 40px;
+  opacity: 0;
 }
 .hero-cta {
   display: inline-block;
   padding: 14px 40px;
-  background: var(--accent);
-  color: var(--white);
-  font-size: .9rem;
-  border-radius: 40px;
-  letter-spacing: .06em;
-  transition: all .3s;
-  border: none; cursor: pointer;
+  background: var(--accent); color: var(--white);
+  font-size: .9rem; border-radius: 40px;
+  letter-spacing: .06em; border: none; cursor: pointer;
+  opacity: 0; transform: translateY(16px);
+  transition: background .3s, box-shadow .3s;
 }
 .hero-cta:hover {
-  background: var(--accent-dark);
-  color: var(--white);
-  transform: translateY(-1px);
+  background: var(--accent-dark); color: var(--white);
   box-shadow: 0 4px 16px rgba(122,139,111,.25);
 }
 
-/* Decorative dots */
-.hero-dots {
+/* Floating SVG notes */
+.hero-notes {
+  position: absolute; inset: 0; z-index: 0;
+  pointer-events: none; overflow: hidden;
+}
+.hero-notes svg {
   position: absolute;
-  width: 120px; height: 120px;
-  opacity: .25;
+  opacity: 0;
 }
-.hero-dots.left {
-  top: 20%; left: 5%;
-  background: radial-gradient(circle, var(--accent) 1px, transparent 1px);
-  background-size: 16px 16px;
+
+/* Decorative blobs */
+.blob {
+  position: absolute; border-radius: 50%;
+  filter: blur(60px); opacity: 0;
+  will-change: transform;
 }
-.hero-dots.right {
-  bottom: 15%; right: 5%;
-  background: radial-gradient(circle, var(--gold) 1px, transparent 1px);
-  background-size: 14px 14px;
+.blob-1 {
+  width: 300px; height: 300px;
+  background: rgba(122,139,111,.07);
+  top: 10%; left: -5%;
+}
+.blob-2 {
+  width: 250px; height: 250px;
+  background: rgba(196,162,101,.06);
+  bottom: 10%; right: -3%;
+}
+.blob-3 {
+  width: 200px; height: 200px;
+  background: rgba(163,178,149,.05);
+  top: 50%; left: 60%;
 }
 
 /* ── Sections ── */
-.section {
-  padding: 80px 24px;
-}
+.section { padding: 80px 24px; }
 .section--alt { background: var(--warm-bg); }
-.section-inner {
-  max-width: var(--max-w);
-  margin: 0 auto;
-}
+.section-inner { max-width: var(--max-w); margin: 0 auto; }
+
 .section-label {
-  font-size: .75rem;
-  color: var(--accent);
-  letter-spacing: .15em;
-  text-align: center;
+  font-size: .75rem; color: var(--accent);
+  letter-spacing: .15em; text-align: center;
   margin-bottom: 12px;
+  opacity: 0; transform: translateY(16px);
 }
 .section-title {
   font-family: var(--serif);
   font-size: clamp(1.4rem, 3vw, 1.85rem);
-  font-weight: 500;
-  text-align: center;
-  line-height: 1.5;
-  margin-bottom: 48px;
-  color: var(--text);
+  font-weight: 500; text-align: center;
+  line-height: 1.5; margin-bottom: 48px; color: var(--text);
+  opacity: 0; transform: translateY(20px);
 }
-
-/* ── Divider ── */
 .divider {
-  width: 48px; height: 2px;
+  width: 0; height: 2px;
   background: var(--gold-light);
-  margin: 0 auto 48px;
-  border-radius: 1px;
+  margin: 0 auto 48px; border-radius: 1px;
 }
 
 /* ── Greeting ── */
 .greeting {
   display: grid;
   grid-template-columns: 200px 1fr;
-  gap: 48px;
-  align-items: start;
+  gap: 48px; align-items: start;
 }
 .greeting-photo {
-  width: 100%;
-  aspect-ratio: 3/4;
+  width: 100%; aspect-ratio: 3/4;
   background: var(--warm-bg);
   border-radius: 12px;
   display: flex; align-items: center; justify-content: center;
-  color: var(--text-lighter);
-  font-size: .8rem;
-  text-align: center;
+  color: var(--text-lighter); font-size: .8rem; text-align: center;
   border: 1px solid var(--border);
+  opacity: 0; transform: translateX(-30px);
 }
 .greeting-text p {
-  margin-bottom: 1.2em;
-  color: var(--text-light);
-  font-size: .95rem;
+  margin-bottom: 1.2em; color: var(--text-light); font-size: .95rem;
+  opacity: 0; transform: translateY(16px);
 }
 .greeting-text p:last-child { margin-bottom: 0; }
-.greeting-text strong {
-  color: var(--text);
-  font-weight: 500;
-}
+.greeting-text strong { color: var(--text); font-weight: 500; }
 
 /* ── Courses ── */
 .courses-grid {
@@ -256,52 +269,38 @@ a:hover { color: var(--gold); }
   border: 1px solid var(--border);
   border-radius: 16px;
   padding: 32px 28px;
-  transition: all .3s;
-}
-.course-card:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 8px 32px rgba(61,53,41,.07);
+  opacity: 0; transform: translateY(40px);
 }
 .course-badge {
-  display: inline-block;
-  font-size: .7rem;
-  padding: 4px 12px;
-  border-radius: 20px;
-  margin-bottom: 16px;
-  letter-spacing: .04em;
+  display: inline-block; font-size: .7rem;
+  padding: 4px 12px; border-radius: 20px;
+  margin-bottom: 16px; letter-spacing: .04em;
 }
 .course-badge--senior { background: #EDE8DF; color: #7A6E5D; }
 .course-badge--adult  { background: #E2EBDD; color: #5C6B52; }
 .course-badge--child  { background: #FFF3E0; color: #A67C3D; }
 .course-badge--baby   { background: #F0E0E8; color: #8B5A6B; }
-
 .course-name {
-  font-family: var(--serif);
-  font-size: 1.1rem;
-  font-weight: 500;
-  margin-bottom: 8px;
-  color: var(--text);
+  font-family: var(--serif); font-size: 1.1rem;
+  font-weight: 500; margin-bottom: 8px; color: var(--text);
 }
 .course-price {
-  font-size: .85rem;
-  color: var(--accent-dark);
-  margin-bottom: 16px;
-  font-weight: 500;
+  font-size: .85rem; color: var(--accent-dark);
+  margin-bottom: 16px; font-weight: 500;
 }
-.course-price span {
-  font-size: 1.15rem;
-}
+.course-price span { font-size: 1.15rem; }
 .course-desc {
-  font-size: .88rem;
-  color: var(--text-light);
-  line-height: 1.85;
+  font-size: .88rem; color: var(--text-light); line-height: 1.85;
 }
 .course-schedule {
-  font-size: .78rem;
-  color: var(--text-lighter);
-  margin-top: 12px;
-  padding-top: 12px;
+  font-size: .78rem; color: var(--text-lighter);
+  margin-top: 12px; padding-top: 12px;
   border-top: 1px solid var(--border);
+}
+.entry-fee {
+  text-align: center; margin-top: 32px;
+  font-size: .85rem; color: var(--text-lighter);
+  opacity: 0; transform: translateY(12px);
 }
 
 /* ── Policy ── */
@@ -309,141 +308,89 @@ a:hover { color: var(--gold); }
   background: var(--card-bg);
   border: 1px solid var(--border);
   border-radius: 16px;
-  padding: 40px;
-  max-width: 680px;
-  margin: 0 auto;
-}
-.policy-box h3 {
-  font-family: var(--serif);
-  font-size: 1.1rem;
-  font-weight: 500;
-  margin-bottom: 20px;
-  color: var(--text);
-  text-align: center;
+  padding: 40px; max-width: 680px; margin: 0 auto;
+  opacity: 0; transform: translateY(24px);
 }
 .policy-box p {
-  font-size: .92rem;
-  color: var(--text-light);
-  margin-bottom: 1em;
-  line-height: 1.9;
+  font-size: .92rem; color: var(--text-light);
+  margin-bottom: 1em; line-height: 1.9;
 }
 .policy-box p:last-child { margin-bottom: 0; }
 .policy-divider {
-  width: 100%;
-  height: 1px;
-  background: var(--border);
-  margin: 24px 0;
+  width: 100%; height: 1px;
+  background: var(--border); margin: 24px 0;
 }
-.policy-box ul {
-  list-style: none;
-  padding: 0;
-}
+.policy-box ul { list-style: none; padding: 0; }
 .policy-box li {
-  font-size: .9rem;
-  color: var(--text-light);
-  padding: 6px 0 6px 20px;
-  position: relative;
-  line-height: 1.8;
+  font-size: .9rem; color: var(--text-light);
+  padding: 6px 0 6px 20px; position: relative; line-height: 1.8;
 }
 .policy-box li::before {
   content: "";
   position: absolute; left: 0; top: 14px;
   width: 6px; height: 6px;
-  background: var(--accent-light);
-  border-radius: 50%;
+  background: var(--accent-light); border-radius: 50%;
 }
 
 /* ── Profile ── */
 .profile {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 48px;
-  align-items: center;
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 48px; align-items: center;
 }
-.profile-text { order: 1; }
+.profile-text { order: 1; opacity: 0; transform: translateX(-30px); }
 .profile-visual { order: 2; }
+.profile-visual-box {
+  width: 100%; aspect-ratio: 4/3;
+  background: var(--warm-bg); border-radius: 12px;
+  display: flex; align-items: center; justify-content: center;
+  color: var(--text-lighter); font-size: .8rem; text-align: center;
+  border: 1px solid var(--border);
+  opacity: 0; transform: translateX(30px);
+}
 .profile-name {
-  font-family: var(--serif);
-  font-size: 1.3rem;
-  font-weight: 500;
-  margin-bottom: 20px;
+  font-family: var(--serif); font-size: 1.3rem;
+  font-weight: 500; margin-bottom: 20px;
 }
 .profile-name span {
-  display: block;
-  font-size: .85rem;
-  font-weight: 400;
-  color: var(--text-light);
-  margin-top: 4px;
-  font-family: var(--sans);
+  display: block; font-size: .85rem; font-weight: 400;
+  color: var(--text-light); margin-top: 4px; font-family: var(--sans);
 }
-.credential-list {
-  list-style: none;
-  padding: 0;
-}
+.credential-list { list-style: none; padding: 0; }
 .credential-list li {
-  font-size: .88rem;
-  color: var(--text-light);
-  padding: 6px 0 6px 20px;
-  position: relative;
-  line-height: 1.7;
+  font-size: .88rem; color: var(--text-light);
+  padding: 6px 0 6px 20px; position: relative; line-height: 1.7;
 }
 .credential-list li::before {
   content: "";
   position: absolute; left: 0; top: 14px;
   width: 6px; height: 6px;
-  border: 1.5px solid var(--accent);
-  border-radius: 50%;
-}
-.profile-visual-box {
-  width: 100%;
-  aspect-ratio: 4/3;
-  background: var(--warm-bg);
-  border-radius: 12px;
-  display: flex; align-items: center; justify-content: center;
-  color: var(--text-lighter);
-  font-size: .8rem;
-  text-align: center;
-  border: 1px solid var(--border);
+  border: 1.5px solid var(--accent); border-radius: 50%;
 }
 
 /* ── Contact ── */
-.contact-form {
-  max-width: 560px;
-  margin: 0 auto;
-}
+.contact-form { max-width: 560px; margin: 0 auto; }
 .form-group { margin-bottom: 20px; }
+.form-group .form-label,
+.form-group .form-input,
+.form-group .form-select,
+.form-group .form-textarea {
+  opacity: 0; transform: translateY(16px);
+}
 .form-label {
-  display: block;
-  font-size: .82rem;
-  color: var(--text-light);
-  margin-bottom: 6px;
-  font-weight: 500;
+  display: block; font-size: .82rem;
+  color: var(--text-light); margin-bottom: 6px; font-weight: 500;
 }
-.form-label .required {
-  color: #C17B5F;
-  font-size: .72rem;
-  margin-left: 4px;
-}
-.form-input,
-.form-select,
-.form-textarea {
-  width: 100%;
-  padding: 12px 16px;
-  border: 1px solid var(--border);
-  border-radius: 10px;
-  background: var(--card-bg);
-  font-size: .9rem;
-  color: var(--text);
-  font-family: var(--sans);
+.form-label .required { color: #C17B5F; font-size: .72rem; margin-left: 4px; }
+.form-input, .form-select, .form-textarea {
+  width: 100%; padding: 12px 16px;
+  border: 1px solid var(--border); border-radius: 10px;
+  background: var(--card-bg); font-size: .9rem;
+  color: var(--text); font-family: var(--sans);
   transition: border-color .2s, box-shadow .2s;
-  -webkit-appearance: none;
-  appearance: none;
+  -webkit-appearance: none; appearance: none;
 }
-.form-input:focus,
-.form-select:focus,
-.form-textarea:focus {
-  outline: none;
-  border-color: var(--accent-light);
+.form-input:focus, .form-select:focus, .form-textarea:focus {
+  outline: none; border-color: var(--accent-light);
   box-shadow: 0 0 0 3px rgba(122,139,111,.12);
 }
 .form-select {
@@ -452,109 +399,65 @@ a:hover { color: var(--gold); }
   background-position: right 16px center;
   padding-right: 40px;
 }
-.form-textarea {
-  min-height: 140px;
-  resize: vertical;
-}
+.form-textarea { min-height: 140px; resize: vertical; }
 .form-submit {
-  width: 100%;
-  padding: 14px;
-  background: var(--accent);
-  color: var(--white);
-  font-size: .9rem;
-  border: none;
-  border-radius: 10px;
-  cursor: pointer;
-  letter-spacing: .06em;
-  transition: all .3s;
-  margin-top: 8px;
+  width: 100%; padding: 14px;
+  background: var(--accent); color: var(--white);
+  font-size: .9rem; border: none; border-radius: 10px;
+  cursor: pointer; letter-spacing: .06em;
+  opacity: 0; transform: translateY(16px);
+  transition: background .3s, box-shadow .3s;
 }
 .form-submit:hover {
   background: var(--accent-dark);
   box-shadow: 0 4px 16px rgba(92,107,82,.2);
 }
 
+.contact-intro {
+  text-align: center; color: var(--text-light);
+  font-size: .92rem; margin-bottom: 32px;
+  opacity: 0; transform: translateY(12px);
+}
+
 /* ── Footer ── */
 .footer {
   background: #3D3529;
   color: rgba(255,255,255,.6);
-  padding: 48px 24px;
-  text-align: center;
+  padding: 48px 24px; text-align: center;
 }
 .footer-logo {
-  font-family: var(--serif);
-  font-size: 1rem;
+  font-family: var(--serif); font-size: 1rem;
   color: rgba(255,255,255,.8);
-  margin-bottom: 16px;
-  letter-spacing: .04em;
+  margin-bottom: 16px; letter-spacing: .04em;
 }
 .footer-info {
-  font-size: .78rem;
-  line-height: 1.9;
-  margin-bottom: 24px;
+  font-size: .78rem; line-height: 1.9; margin-bottom: 24px;
 }
-.footer-copy {
-  font-size: .72rem;
-  color: rgba(255,255,255,.35);
-}
-
-/* ── Animations ── */
-.fade-in {
-  opacity: 0;
-  transform: translateY(24px);
-  transition: opacity .7s ease, transform .7s ease;
-}
-.fade-in.visible {
-  opacity: 1;
-  transform: translateY(0);
-}
+.footer-copy { font-size: .72rem; color: rgba(255,255,255,.35); }
 
 /* ── Responsive ── */
 @media (max-width: 768px) {
   .nav-links { display: none; }
   .nav-toggle { display: block; }
-
   .nav-links.open {
-    display: flex;
-    flex-direction: column;
-    position: absolute;
-    top: 64px; left: 0; right: 0;
+    display: flex; flex-direction: column;
+    position: absolute; top: 64px; left: 0; right: 0;
     background: rgba(250,246,240,.98);
     backdrop-filter: blur(8px);
-    padding: 16px 24px 24px;
-    gap: 16px;
+    padding: 16px 24px 24px; gap: 16px;
     border-bottom: 1px solid var(--border);
   }
-
-  .greeting {
-    grid-template-columns: 1fr;
-    gap: 28px;
-  }
-  .greeting-photo {
-    max-width: 200px;
-    margin: 0 auto;
-  }
-
-  .courses-grid {
-    grid-template-columns: 1fr;
-  }
-
-  .profile {
-    grid-template-columns: 1fr;
-    gap: 28px;
-  }
+  .greeting { grid-template-columns: 1fr; gap: 28px; }
+  .greeting-photo { max-width: 200px; margin: 0 auto; }
+  .courses-grid { grid-template-columns: 1fr; }
+  .profile { grid-template-columns: 1fr; gap: 28px; }
   .profile-text { order: 1; }
   .profile-visual { order: 0; }
-
   .policy-box { padding: 28px 24px; }
-
   .section { padding: 60px 20px; }
-
   .hero { padding: 100px 20px 60px; }
-
-  .hero-dots { display: none; }
+  .blob-1, .blob-2, .blob-3 { display: none; }
 }
-
 @media (max-width: 400px) {
   .hero-copy { font-size: 1.6rem; }
 }
@@ -562,7 +465,13 @@ a:hover { color: var(--gold); }
 </head>
 <body>
 
-<!-- Navigation -->
+<!-- Loading -->
+<div class="loader" id="loader">
+  <div class="loader-note">&#9835;</div>
+  <div class="loader-text">浦和美園ピアノ教室</div>
+</div>
+
+<!-- Nav -->
 <nav class="nav" id="nav">
   <div class="nav-inner">
     <a href="#" class="nav-logo">浦和美園ピアノ教室</a>
@@ -580,11 +489,29 @@ a:hover { color: var(--gold); }
 
 <!-- Hero -->
 <section class="hero">
-  <div class="hero-dots left"></div>
-  <div class="hero-dots right"></div>
-  <div class="hero-content fade-in">
+  <div class="blob blob-1"></div>
+  <div class="blob blob-2"></div>
+  <div class="blob blob-3"></div>
+  <div class="hero-notes" id="heroNotes">
+    <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.5" style="left:12%;top:25%;color:var(--accent-light)">
+      <path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/>
+    </svg>
+    <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.5" style="right:15%;top:30%;color:var(--gold)">
+      <path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/>
+    </svg>
+    <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.5" style="left:8%;bottom:30%;color:var(--accent)">
+      <path d="M12 3v10.55A4 4 0 1 0 14 17V7h4"/>
+    </svg>
+    <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.5" style="right:10%;bottom:25%;color:var(--accent-light)">
+      <path d="M12 3v10.55A4 4 0 1 0 14 17V7h4"/>
+    </svg>
+    <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.5" style="left:30%;top:15%;color:var(--gold-light)">
+      <path d="M12 3v10.55A4 4 0 1 0 14 17V7h4"/>
+    </svg>
+  </div>
+  <div class="hero-content">
     <p class="hero-label">URAWA-MISONO PIANO</p>
-    <h1 class="hero-copy">ただいま、って<br>言いたくなる<br><em>ピアノ教室。</em></h1>
+    <h1 class="hero-copy" id="heroCopy"><span class="char">た</span><span class="char">だ</span><span class="char">い</span><span class="char">ま</span><span class="char">、</span><span class="char">っ</span><span class="char">て</span><br><span class="char">言</span><span class="char">い</span><span class="char">た</span><span class="char">く</span><span class="char">な</span><span class="char">る</span><br><em><span class="char">ピ</span><span class="char">ア</span><span class="char">ノ</span><span class="char">教</span><span class="char">室</span><span class="char">。</span></em></h1>
     <p class="hero-sub">
       浦和美園にある、お茶の飲める小さな音楽教室。<br>
       講師歴30年の先生がお届けする、<br>
@@ -597,15 +524,15 @@ a:hover { color: var(--gold); }
 <!-- Greeting -->
 <section class="section" id="about">
   <div class="section-inner">
-    <p class="section-label fade-in">GREETING</p>
-    <h2 class="section-title fade-in">教室の想い</h2>
-    <div class="divider fade-in"></div>
+    <p class="section-label">GREETING</p>
+    <h2 class="section-title">教室の想い</h2>
+    <div class="divider"></div>
     <div class="greeting">
-      <div class="greeting-photo fade-in">先生の写真</div>
-      <div class="greeting-text fade-in">
+      <div class="greeting-photo">先生の写真</div>
+      <div class="greeting-text">
         <p>はじめまして。</p>
         <p>ピアノ教室を開くことになって、一番に考えたのは「どんな場所にしたいか」でした。</p>
-        <p>コンクールのための技術を身につける場所。受験に向けたレッスンをする場所。<br>そういう教室もいいけれど、わたしが作りたいのは<strong>違う形</strong>でした。</p>
+        <p>コンクールのための技術を身につける場所。受験に向けたレッスンをする場所。<br>そういう教室もいいけれど、わたしが作りたいは<strong>違う形</strong>でした。</p>
         <p>30年間、のべ2,000人以上の方にピアノを教えてきました。<br>小さな子供から大人の方まで、いろんな方と向き合ってきて気づいたことがあります。<br><strong>「ピアノを弾けるようになりたい」</strong>—その言葉の奥には、たいてい別の気持ちが隠れています。</p>
         <p>「なにか楽しいことを始めたい」<br>「自分のために使える時間が欲しい」<br>「子どもの頃に習っていたピアノを、もう一度」</p>
         <p>そんな気持ちを抱えて教室のドアを開けた方に、<br>
@@ -627,12 +554,11 @@ a:hover { color: var(--gold); }
 <!-- Courses -->
 <section class="section section--alt" id="courses">
   <div class="section-inner">
-    <p class="section-label fade-in">COURSES</p>
-    <h2 class="section-title fade-in">コースご案内</h2>
-    <div class="divider fade-in"></div>
+    <p class="section-label">COURSES</p>
+    <h2 class="section-title">コースご案内</h2>
+    <div class="divider"></div>
     <div class="courses-grid">
-
-      <div class="course-card fade-in">
+      <div class="course-card">
         <span class="course-badge course-badge--senior">シニア・年配の方</span>
         <h3 class="course-name">大人のプレミアムコース</h3>
         <p class="course-price">月1回 30分 ／ <span>5,000円</span></p>
@@ -643,8 +569,7 @@ a:hover { color: var(--gold); }
           お茶とおしゃべりと音楽。月に1回の、あなたのサードプレイス。
         </p>
       </div>
-
-      <div class="course-card fade-in">
+      <div class="course-card">
         <span class="course-badge course-badge--adult">大人の方</span>
         <h3 class="course-name">エグゼクティブ個人枠</h3>
         <p class="course-price">月1回 45〜60分 ／ <span>8,000円</span></p>
@@ -655,8 +580,7 @@ a:hover { color: var(--gold); }
           「いま始めるのは遅すぎるかしら」—大丈夫、そんなことはありません。
         </p>
       </div>
-
-      <div class="course-card fade-in">
+      <div class="course-card">
         <span class="course-badge course-badge--child">こども</span>
         <h3 class="course-name">こども音楽コース</h3>
         <p class="course-price">月3〜4回 30分 ／ <span>12,000円〜</span></p>
@@ -668,8 +592,7 @@ a:hover { color: var(--gold); }
         </p>
         <p class="course-schedule">作曲・他楽器体験も含む</p>
       </div>
-
-      <div class="course-card fade-in">
+      <div class="course-card">
         <span class="course-badge course-badge--baby">未就学児</span>
         <h3 class="course-name">グループ・リトミック</h3>
         <p class="course-price">月3回 1回40分 ／ <span>月額3,000円</span></p>
@@ -681,21 +604,18 @@ a:hover { color: var(--gold); }
         </p>
         <p class="course-schedule">火・水・金 午前／1回1,000円×月3回</p>
       </div>
-
     </div>
-    <p style="text-align:center; margin-top:32px; font-size:.85rem; color:var(--text-lighter);" class="fade-in">
-      入会金　一律 10,000円
-    </p>
+    <p class="entry-fee">入会金　一律 10,000円</p>
   </div>
 </section>
 
 <!-- Policy -->
 <section class="section" id="policy">
   <div class="section-inner">
-    <p class="section-label fade-in">POLICY</p>
-    <h2 class="section-title fade-in">お伝えしておきたいこと</h2>
-    <div class="divider fade-in"></div>
-    <div class="policy-box fade-in">
+    <p class="section-label">POLICY</p>
+    <h2 class="section-title">お伝えしておきたいこと</h2>
+    <div class="divider"></div>
+    <div class="policy-box">
       <p>当教室は「アットホーム」を大切にしていますが、「安かろう悪かろう」ではありません。</p>
       <p>講師歴30年、のべ2,000人を教えてきた経験と技術があります。<br>だからこそ、しっかりとした料金設定で、しっかりとしたレッスンをお約束します。</p>
       <div class="policy-divider"></div>
@@ -717,11 +637,11 @@ a:hover { color: var(--gold); }
 <!-- Profile -->
 <section class="section section--alt" id="profile">
   <div class="section-inner">
-    <p class="section-label fade-in">TEACHER</p>
-    <h2 class="section-title fade-in">講師紹介</h2>
-    <div class="divider fade-in"></div>
+    <p class="section-label">TEACHER</p>
+    <h2 class="section-title">講師紹介</h2>
+    <div class="divider"></div>
     <div class="profile">
-      <div class="profile-text fade-in">
+      <div class="profile-text">
         <h3 class="profile-name">
           講師名
           <span>浦和美園ピアノ教室 代表</span>
@@ -735,7 +655,7 @@ a:hover { color: var(--gold); }
           <li>のべ 2,000人 レッスン実績</li>
         </ul>
       </div>
-      <div class="profile-visual fade-in">
+      <div class="profile-visual">
         <div class="profile-visual-box">先生の写真</div>
       </div>
     </div>
@@ -745,13 +665,13 @@ a:hover { color: var(--gold); }
 <!-- Contact -->
 <section class="section" id="contact">
   <div class="section-inner">
-    <p class="section-label fade-in">CONTACT</p>
-    <h2 class="section-title fade-in">お問い合わせ</h2>
-    <div class="divider fade-in"></div>
-    <p style="text-align:center; color:var(--text-light); font-size:.92rem; margin-bottom:32px;" class="fade-in">
+    <p class="section-label">CONTACT</p>
+    <h2 class="section-title">お問い合わせ</h2>
+    <div class="divider"></div>
+    <p class="contact-intro">
       まずは気軽にご連絡ください。<br>お茶を飲みながら、ゆっくりお話ししましょう。
     </p>
-    <form class="contact-form fade-in" action="#" method="POST">
+    <form class="contact-form" action="#" method="POST">
       <div class="form-group">
         <label class="form-label">お名前<span class="required">*</span></label>
         <input type="text" name="name" class="form-input" required placeholder="山田 はなこ">
@@ -794,14 +714,171 @@ a:hover { color: var(--gold); }
   <p class="footer-copy">&copy; 浦和美園ピアノ教室</p>
 </footer>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
 <script>
-// Nav scroll effect
-const nav = document.getElementById('nav');
+gsap.registerPlugin(ScrollTrigger);
+
+// ── Loading Sequence ──
+const loaderTl = gsap.timeline({
+  onComplete: () => {
+    gsap.to('#loader', { opacity: 0, duration: .5, onComplete: () => {
+      document.getElementById('loader').style.display = 'none';
+      pageEntrance();
+    }});
+  }
+});
+loaderTl
+  .to('.loader-note', { opacity: 1, scale: 1, duration: .6, ease: 'back.out(1.7)' })
+  .to('.loader-text', { opacity: 1, y: 0, duration: .4 }, '-=.2')
+  .to({}, { duration: .8 });
+
+// ── Page Entrance ──
+function pageEntrance() {
+  const master = gsap.timeline();
+
+  // Nav
+  master.to('.nav-logo', { opacity: 1, duration: .6, ease: 'power2.out' });
+  master.to('.nav-links a', { opacity: 1, stagger: .08, duration: .4, ease: 'power2.out' }, '-=.3');
+
+  // Blobs drift in
+  master.to('.blob', { opacity: 1, stagger: .2, duration: 1.2, ease: 'power2.out' }, 0);
+
+  // Floating notes
+  const notes = document.querySelectorAll('.hero-notes svg');
+  gsap.to(notes, {
+    opacity: 0.35,
+    duration: 1,
+    stagger: { each: .15, from: 'random' },
+    ease: 'power2.out',
+  });
+  notes.forEach((note, i) => {
+    gsap.to(note, {
+      y: `random(-20, 20)`,
+      x: `random(-10, 10)`,
+      rotation: `random(-8, 8)`,
+      duration: `random(3, 5)`,
+      repeat: -1,
+      yoyo: true,
+      ease: 'sine.inOut',
+      delay: i * .3,
+    });
+  });
+
+  // Hero label
+  master.to('.hero-label', { opacity: 1, y: 0, duration: .5, ease: 'power2.out' }, .2);
+
+  // Hero copy — characters already wrapped in HTML
+  const chars = document.querySelectorAll('#heroCopy .char');
+  master.to(chars, {
+    opacity: 1, y: 0,
+    stagger: { each: .03, from: 'start' },
+    duration: .5, ease: 'power2.out',
+  }, .4);
+
+  // Hero sub
+  master.to('.hero-sub', { opacity: 1, duration: .6, ease: 'power2.out' }, '-=.4');
+
+  // Hero CTA
+  master.to('.hero-cta', { opacity: 1, y: 0, duration: .5, ease: 'back.out(1.4)' }, '-=.3');
+
+  return master;
+}
+
+// ── Scroll Animations ──
+
+// Greeting photo
+gsap.to('.greeting-photo', {
+  scrollTrigger: { trigger: '.greeting', start: 'top 75%' },
+  opacity: 1, x: 0, duration: .8, ease: 'power2.out',
+});
+
+// Greeting text paragraphs
+gsap.utils.toArray('.greeting-text p').forEach((p, i) => {
+  gsap.to(p, {
+    scrollTrigger: { trigger: p, start: 'top 85%' },
+    opacity: 1, y: 0, duration: .6, delay: i * .06, ease: 'power2.out',
+  });
+});
+
+// Section labels & titles
+gsap.utils.toArray('.section-label').forEach(el => {
+  gsap.to(el, {
+    scrollTrigger: { trigger: el, start: 'top 80%' },
+    opacity: 1, y: 0, duration: .5, ease: 'power2.out',
+  });
+});
+gsap.utils.toArray('.section-title').forEach(el => {
+  gsap.to(el, {
+    scrollTrigger: { trigger: el, start: 'top 80%' },
+    opacity: 1, y: 0, duration: .6, ease: 'power2.out',
+  });
+});
+
+// Dividers expand
+gsap.utils.toArray('.divider').forEach(el => {
+  gsap.to(el, {
+    scrollTrigger: { trigger: el, start: 'top 82%' },
+    width: 48, duration: .6, ease: 'power2.inOut',
+  });
+});
+
+// Course cards
+gsap.utils.toArray('.course-card').forEach((card, i) => {
+  gsap.to(card, {
+    scrollTrigger: { trigger: card, start: 'top 82%' },
+    opacity: 1, y: 0, duration: .7,
+    delay: (i % 2) * .12, ease: 'power2.out',
+  });
+});
+
+// Entry fee
+gsap.to('.entry-fee', {
+  scrollTrigger: { trigger: '.entry-fee', start: 'top 90%' },
+  opacity: 1, y: 0, duration: .5, ease: 'power2.out',
+});
+
+// Policy box
+gsap.to('.policy-box', {
+  scrollTrigger: { trigger: '.policy-box', start: 'top 78%' },
+  opacity: 1, y: 0, duration: .8, ease: 'power2.out',
+});
+
+// Profile
+gsap.to('.profile-text', {
+  scrollTrigger: { trigger: '.profile', start: 'top 75%' },
+  opacity: 1, x: 0, duration: .8, ease: 'power2.out',
+});
+gsap.to('.profile-visual-box', {
+  scrollTrigger: { trigger: '.profile', start: 'top 75%' },
+  opacity: 1, x: 0, duration: .8, delay: .15, ease: 'power2.out',
+});
+
+// Contact intro
+gsap.to('.contact-intro', {
+  scrollTrigger: { trigger: '.contact-intro', start: 'top 85%' },
+  opacity: 1, y: 0, duration: .5, ease: 'power2.out',
+});
+
+// Form elements stagger
+gsap.utils.toArray('.form-group').forEach((group, i) => {
+  gsap.to(group.children, {
+    scrollTrigger: { trigger: group, start: 'top 88%' },
+    opacity: 1, y: 0, stagger: .06, duration: .5,
+    delay: i * .04, ease: 'power2.out',
+  });
+});
+gsap.to('.form-submit', {
+  scrollTrigger: { trigger: '.form-submit', start: 'top 92%' },
+  opacity: 1, y: 0, duration: .5, ease: 'power2.out',
+});
+
+// ── Nav scroll effect ──
 window.addEventListener('scroll', () => {
-  nav.classList.toggle('scrolled', window.scrollY > 20);
+  document.getElementById('nav').classList.toggle('scrolled', window.scrollY > 20);
 }, { passive: true });
 
-// Mobile menu
+// ── Mobile menu ──
 const toggle = document.getElementById('navToggle');
 const links = document.getElementById('navLinks');
 toggle.addEventListener('click', () => {
@@ -814,17 +891,6 @@ links.querySelectorAll('a').forEach(a => {
     links.classList.remove('open');
   });
 });
-
-// Fade-in on scroll
-const observer = new IntersectionObserver((entries) => {
-  entries.forEach(entry => {
-    if (entry.isIntersecting) {
-      entry.target.classList.add('visible');
-    }
-  });
-}, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
-document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
 </script>
-
 </body>
 </html>
