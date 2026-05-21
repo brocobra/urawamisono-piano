@@ -1,0 +1,687 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>浦和美園ピアノ教室 — お茶の飲める小さな音楽教室</title>
+<meta name="description" content="浦和美園にある、お茶の飲める小さな音楽教室。講師歴30年・のべ2,000人の実績。">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Shippori+Mincho:wght@400;500;700&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<style>
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: "Shippori Mincho", "Hiragino Mincho ProN", serif;
+  background: var(--desk);
+  color: var(--ink);
+  line-break: strict; word-break: normal;
+  line-height: 1.85;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+:root {
+  --desk: #5C4A3A;
+  --paper: #FDF8F0;
+  --paper-shadow: #E8DFD2;
+  --ink: #2C2419;
+  --ink-light: #5A4D3E;
+  --ink-faint: #8A7D6E;
+  --wine: #7A2E3F;
+  --wine-light: #A8485C;
+  --gold: #C4A265;
+  --gold-light: #E2D4B0;
+  --seal: #8B2942;
+  --font-display: "Cormorant Garamond", "Shippori Mincho", serif;
+  --font-body: "Shippori Mincho", "Hiragino Mincho ProN", serif;
+}
+
+/* ── Envelope Scene ── */
+.envelope-scene {
+  position: fixed; inset: 0; z-index: 100;
+  background: radial-gradient(ellipse at 50% 40%, #7A6652 0%, #5C4A3A 50%, #3D2E22 100%);
+  display: flex; align-items: center; justify-content: center;
+  perspective: 1200px;
+  cursor: pointer;
+}
+.envelope-scene.hidden {
+  pointer-events: none;
+}
+
+/* Desk texture */
+.desk-grain {
+  position: absolute; inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.06'/%3E%3C/svg%3E");
+  opacity: .5;
+}
+
+/* Warm light */
+.desk-light {
+  position: absolute; inset: 0;
+  background: radial-gradient(ellipse 60% 50% at 50% 30%, rgba(196,162,101,.15) 0%, transparent 70%);
+}
+
+/* Envelope */
+.envelope {
+  position: relative; z-index: 1;
+  width: 520px; max-width: 90vw;
+  transform-style: preserve-3d;
+}
+
+/* Envelope body */
+.envelope-body {
+  position: relative;
+  background: linear-gradient(170deg, #E8D9C4 0%, #DDD0BC 50%, #D4C7AF 100%);
+  border-radius: 6px;
+  padding: 80px 48px 48px;
+  box-shadow:
+    0 2px 4px rgba(0,0,0,.1),
+    0 8px 16px rgba(0,0,0,.15),
+    0 24px 48px rgba(0,0,0,.2),
+    inset 0 1px 0 rgba(255,255,255,.4);
+  overflow: hidden;
+}
+
+/* Inner flap pattern */
+.envelope-body::before {
+  content: "";
+  position: absolute; bottom: 0; left: 0; right: 0; height: 60%;
+  background: repeating-linear-gradient(
+    45deg,
+    transparent,
+    transparent 10px,
+    rgba(196,162,101,.06) 10px,
+    rgba(196,162,101,.06) 20px
+  );
+}
+
+/* Flap */
+.envelope-flap {
+  position: absolute; top: 0; left: 0; right: 0;
+  height: 200px;
+  transform-origin: top center;
+  transform: rotateX(0deg);
+  z-index: 2;
+  transition: none;
+}
+.envelope-flap-front {
+  position: absolute; inset: 0;
+  background: linear-gradient(180deg, #C9B89E 0%, #D4C7AF 100%);
+  clip-path: polygon(0 0, 50% 70%, 100% 0);
+  box-shadow: 0 4px 12px rgba(0,0,0,.15);
+}
+.envelope-flap-back {
+  position: absolute; inset: 0;
+  background: linear-gradient(0deg, #E8D9C4 0%, #DDD0BC 100%);
+  clip-path: polygon(0 0, 50% 70%, 100% 0);
+  transform: rotateX(180deg);
+  backface-visibility: hidden;
+}
+
+/* Seal */
+.seal {
+  position: absolute;
+  top: 130px; left: 50%; transform: translateX(-50%);
+  width: 56px; height: 56px;
+  background: radial-gradient(circle at 40% 35%, #A8485C, var(--seal));
+  border-radius: 50%;
+  z-index: 3;
+  display: flex; align-items: center; justify-content: center;
+  box-shadow: 0 2px 8px rgba(139,41,66,.4);
+}
+.seal::after {
+  content: "音";
+  color: rgba(255,255,255,.7);
+  font-family: var(--font-body);
+  font-size: 1.1rem; font-weight: 700;
+}
+
+/* Prompt */
+.envelope-prompt {
+  position: absolute;
+  bottom: -48px; left: 50%; transform: translateX(-50%);
+  font-family: var(--font-body);
+  font-size: .82rem;
+  color: rgba(255,255,255,.5);
+  letter-spacing: .1em;
+  white-space: nowrap;
+  animation: promptPulse 2s ease-in-out infinite;
+}
+@keyframes promptPulse {
+  0%, 100% { opacity: .5; }
+  50% { opacity: 1; }
+}
+
+/* Letter peeking out */
+.letter-peek {
+  position: absolute;
+  top: 20px; left: 50%; transform: translateX(-50%);
+  width: 88%; height: 60px;
+  background: var(--paper);
+  border-radius: 4px 4px 0 0;
+  box-shadow: 0 -2px 8px rgba(0,0,0,.08);
+  z-index: 1;
+  opacity: 0;
+}
+
+/* ── Letter Page ── */
+.letter-page {
+  display: none; /* shown after envelope opens */
+  background: var(--desk);
+  min-height: 100vh;
+  position: relative;
+}
+.letter-page.active { display: block; }
+
+.desk-bg {
+  position: fixed; inset: 0; z-index: 0;
+  background: radial-gradient(ellipse at 50% 30%, #7A6652 0%, #5C4A3A 50%, #3D2E22 100%);
+}
+.desk-bg .desk-grain,
+.desk-bg .desk-light { position: absolute; inset: 0; }
+
+/* Letter paper */
+.letter {
+  position: relative; z-index: 1;
+  max-width: 640px;
+  margin: 0 auto;
+  padding: 48px 40px 60px;
+  background: var(--paper);
+  box-shadow:
+    0 1px 2px rgba(0,0,0,.04),
+    0 4px 8px rgba(0,0,0,.06),
+    0 12px 24px rgba(0,0,0,.08),
+    0 32px 64px rgba(0,0,0,.12);
+}
+
+/* Gold rule at top */
+.letter::before {
+  content: "";
+  position: absolute; top: 24px; left: 40px; right: 40px;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--gold), transparent);
+}
+
+/* Watermark */
+.letter::after {
+  content: "音";
+  position: absolute;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 18rem;
+  font-family: var(--font-body);
+  color: rgba(196,162,101,.06);
+  pointer-events: none;
+}
+
+/* Nav inside letter */
+.letter-nav {
+  display: flex; justify-content: space-between; align-items: center;
+  padding-bottom: var(--space-lg);
+  border-bottom: 1px solid var(--gold-light);
+  margin-bottom: var(--space-xl);
+  position: relative; z-index: 1;
+}
+.letter-nav-name {
+  font-family: var(--font-body);
+  font-size: .88rem; font-weight: 700;
+  color: var(--ink);
+}
+.letter-nav-links { display: flex; gap: 20px; }
+.letter-nav-links a {
+  font-size: .75rem; color: var(--ink-faint);
+  text-decoration: none;
+  transition: color .2s;
+}
+.letter-nav-links a:hover { color: var(--wine); }
+
+:root {
+  --space-xs: 4px; --space-sm: 8px; --space-md: 16px;
+  --space-lg: 24px; --space-xl: 32px; --space-2xl: 48px;
+  --space-3xl: 72px; --space-4xl: 96px;
+}
+
+/* Opening */
+.letter-opening { position: relative; z-index: 1; margin-bottom: var(--space-2xl); }
+.letter-date {
+  font-size: .78rem; color: var(--ink-faint);
+  letter-spacing: .05em; margin-bottom: var(--space-sm);
+}
+.letter-greeting {
+  font-family: var(--font-display);
+  font-size: 1.6rem; font-weight: 600;
+  font-style: italic;
+  line-height: 1.4;
+  color: var(--ink);
+  margin-bottom: var(--space-lg);
+}
+
+/* Prose */
+.prose { position: relative; z-index: 1; }
+.prose p {
+  font-size: .92rem; color: var(--ink-light);
+  margin-bottom: 1.2em; max-width: 56ch;
+}
+.prose p:last-child { margin-bottom: 0; }
+.prose strong { color: var(--ink); font-weight: 700; }
+
+/* Photo frames */
+.photo-frame {
+  position: relative; z-index: 1;
+  margin: var(--space-2xl) 0;
+  padding: 12px 12px 40px;
+  background: #fff;
+  box-shadow: 0 2px 8px rgba(0,0,0,.1), 0 8px 24px rgba(0,0,0,.08);
+  transform: rotate(-1.5deg);
+}
+.photo-frame:nth-child(even) { transform: rotate(1.5deg); margin-left: 40px; }
+.photo-frame:nth-child(odd) { margin-right: 40px; }
+.photo-frame img, .photo-placeholder {
+  width: 100%; aspect-ratio: 4/3;
+  display: block;
+}
+.photo-placeholder {
+  background: linear-gradient(135deg, #E8DDD3, #D4C4B0);
+  display: flex; align-items: center; justify-content: center;
+  color: #9A8E7F; font-size: .82rem;
+}
+.photo-caption {
+  position: absolute; bottom: 12px; left: 16px; right: 16px;
+  font-size: .72rem; color: var(--ink-faint);
+  font-style: italic;
+}
+
+/* Separator */
+.sep {
+  text-align: center; color: var(--gold);
+  font-size: .9rem; letter-spacing: .5em;
+  padding: var(--space-2xl) 0;
+  position: relative; z-index: 1;
+}
+
+/* Courses */
+.course-list { position: relative; z-index: 1; list-style: none; }
+.course-item {
+  padding: var(--space-lg) 0;
+  border-bottom: 1px solid var(--gold-light);
+}
+.course-item:last-child { border-bottom: none; }
+.course-name {
+  font-family: var(--font-display);
+  font-size: 1.05rem; font-weight: 600;
+  font-style: italic; color: var(--wine);
+  margin-bottom: 4px;
+}
+.course-meta {
+  font-size: .75rem; color: var(--gold);
+  font-weight: 600; letter-spacing: .03em;
+  margin-bottom: var(--space-sm);
+}
+.course-desc {
+  font-size: .85rem; color: var(--ink-light); line-height: 1.8;
+  max-width: 52ch;
+}
+.entry-note {
+  font-size: .75rem; color: var(--ink-faint);
+  margin-top: var(--space-md); position: relative; z-index: 1;
+}
+
+/* Policy */
+.policy-note {
+  background: rgba(196,162,101,.08);
+  padding: var(--space-xl);
+  border-left: 3px solid var(--wine);
+  border-radius: 0 var(--space-sm) var(--space-sm) 0;
+  margin: var(--space-2xl) 0;
+  position: relative; z-index: 1;
+}
+.policy-note p {
+  font-size: .88rem; color: var(--ink-light);
+  line-height: 1.8; margin-bottom: .8em;
+}
+.policy-note p:last-child { margin-bottom: 0; }
+.policy-note strong { color: var(--ink); }
+
+/* Credentials */
+.credentials { position: relative; z-index: 1; padding: var(--space-xl) 0; }
+.cred-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 6px 24px; }
+.cred-item {
+  font-size: .8rem; color: var(--ink-light);
+  padding: 6px 0; border-bottom: 1px solid rgba(196,162,101,.2);
+}
+.cred-item.wide { grid-column: 1 / -1; }
+.cred-item strong { color: var(--ink); font-weight: 700; }
+
+/* Contact */
+.ps-section {
+  position: relative; z-index: 1;
+  padding-top: var(--space-xl);
+  margin-top: var(--space-xl);
+  border-top: 2px solid var(--ink);
+}
+.ps-heading {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: 1.1rem; font-weight: 600;
+  margin-bottom: var(--space-md);
+  color: var(--wine);
+}
+.ps-text {
+  font-size: .88rem; color: var(--ink-light);
+  margin-bottom: var(--space-lg); line-height: 1.8;
+}
+.form-row { margin-bottom: var(--space-md); }
+.form-label {
+  display: block; font-size: .75rem; font-weight: 500;
+  color: var(--ink); margin-bottom: 4px;
+}
+.form-label .req { color: var(--wine); }
+.form-input, .form-select, .form-textarea {
+  width: 100%; padding: 10px 12px;
+  border: 1px solid var(--gold-light);
+  border-radius: 4px; background: rgba(255,255,255,.6);
+  font-family: var(--font-body); font-size: .85rem;
+  color: var(--ink); transition: border-color .2s;
+  -webkit-appearance: none; appearance: none;
+}
+.form-input:focus, .form-select:focus, .form-textarea:focus {
+  outline: none; border-color: var(--wine);
+}
+.form-select {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%238A7D6E' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat; background-position: right 12px center;
+  padding-right: 32px;
+}
+.form-textarea { min-height: 90px; resize: vertical; }
+.form-submit {
+  display: inline-block; padding: 10px 28px;
+  background: var(--wine); color: var(--paper);
+  font-family: var(--font-body); font-size: .85rem; font-weight: 500;
+  border: none; border-radius: 4px; cursor: pointer;
+  transition: background .2s;
+}
+.form-submit:hover { background: var(--wine-light); }
+.form-submit:focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; }
+
+/* Footer */
+.letter-footer {
+  text-align: center; padding: var(--space-3xl) 0 var(--space-2xl);
+  position: relative; z-index: 1;
+}
+.letter-footer p {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: 1rem; color: var(--gold);
+  margin-bottom: var(--space-sm);
+}
+.letter-footer span {
+  font-family: var(--font-body);
+  font-style: normal;
+  font-size: .72rem; color: var(--ink-faint);
+}
+
+/* Signature */
+.signature {
+  text-align: right; margin-top: var(--space-xl);
+  position: relative; z-index: 1;
+}
+.signature-name {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: 1.3rem; font-weight: 600;
+  color: var(--wine);
+}
+
+/* Responsive */
+@media (max-width: 640px) {
+  .envelope-body { padding: 60px 24px 36px; }
+  .letter { padding: 36px 24px 48px; }
+  .letter-greeting { font-size: 1.3rem; }
+  .photo-frame { transform: rotate(0) !important; margin: var(--space-xl) 0 !important; }
+  .cred-grid { grid-template-columns: 1fr; }
+  .letter-nav-links { gap: 12px; }
+  .letter-nav-links a { font-size: .7rem; }
+}
+</style>
+</head>
+<body>
+
+<!-- Envelope Scene -->
+<div class="envelope-scene" id="envelopeScene">
+  <div class="desk-grain"></div>
+  <div class="desk-light"></div>
+  <div class="envelope" id="envelope">
+    <div class="letter-peek" id="letterPeek"></div>
+    <div class="envelope-flap" id="envelopeFlap">
+      <div class="envelope-flap-front"></div>
+      <div class="envelope-flap-back"></div>
+    </div>
+    <div class="envelope-body">
+      <div class="seal" id="seal"></div>
+      <div style="text-align:center; padding-top:8px;">
+        <span style="font-size:.78rem; color:rgba(0,0,0,.25); letter-spacing:.08em;">浦和美園ピアノ教室</span>
+      </div>
+    </div>
+    <div class="envelope-prompt" id="envelopePrompt">クリックして開ける</div>
+  </div>
+</div>
+
+<!-- Letter Page -->
+<div class="letter-page" id="letterPage">
+  <div class="desk-bg">
+    <div class="desk-grain"></div>
+    <div class="desk-light"></div>
+  </div>
+
+  <div class="letter">
+    <nav class="letter-nav">
+      <span class="letter-nav-name">浦和美園ピアノ教室</span>
+      <div class="letter-nav-links">
+        <a href="#courses">コース</a>
+        <a href="#profile">講師</a>
+        <a href="#contact">お問い合わせ</a>
+      </div>
+    </nav>
+
+    <div class="letter-opening">
+      <p class="letter-date">埼玉県さいたま市緑区浦和美園より</p>
+      <h1 class="letter-greeting">はじめまして。<br>浦和美園で、小さな<br>音楽教室を始めました。</h1>
+    </div>
+
+    <div class="prose">
+      <p>ピアノ教室を開くことになって、一番に考えたのは「どんな場所にしたいか」でした。</p>
+      <p>コンクールのための技術を身につける場所。受験に向けたレッスンをする場所。そういう教室もいいけれど、わたしが作りたいは<strong>違う形</strong>でした。</p>
+    </div>
+
+    <div class="photo-frame letter-reveal">
+      <div class="photo-placeholder">教室の写真</div>
+      <span class="photo-caption">お茶の飲める、くつろぎの待合室</span>
+    </div>
+
+    <div class="prose">
+      <p>30年間、のべ2,000人以上の方にピアノを教えてきました。小さな子供から大人の方まで、いろんな方と向き合ってきて気づいたことがあります。</p>
+      <p><strong>「ピアノを弾けるようになりたい」</strong>—その言葉の奥には、たいてい別の気持ちが隠れています。「なにか楽しいことを始めたい」「自分のために使える時間が欲しい」「子どもの頃に習っていたピアノを、もう一度」。</p>
+      <p>そんな気持ちを抱えて教室のドアを開けた方に、「あ、なんだかいいところ」「思ってたより気楽でいいな」「また来たくなる」—そう感じてもらえる場所にしたい。</p>
+      <p>だから、ここではお茶を淹れてお待ちしています。レッスン前の子どもたち、送ってきたお母さんたち、のんびり訪れる大人の方たち。<strong>みんなで「おかえり」と言える場所</strong>に。</p>
+    </div>
+
+    <div class="photo-frame letter-reveal">
+      <div class="photo-placeholder">ピアノの写真</div>
+      <span class="photo-caption">ピアノ・エレクトーン完備</span>
+    </div>
+
+    <div class="sep">· · ·</div>
+
+    <section id="courses">
+      <div class="prose"><p>教室のことを、いくつかご案内します。</p></div>
+      <ul class="course-list">
+        <li class="course-item letter-reveal">
+          <h3 class="course-name">大人のプレミアムコース</h3>
+          <p class="course-meta">月1回 30分 ／ 5,000円</p>
+          <p class="course-desc">月に1回、30分。ゆっくりお話ししながら、好きな曲を弾けるようになる。「上達」じゃなくて「愉しむ」ための時間。お茶とおしゃべりと音楽。月に1回の、あなたの居場所。</p>
+        </li>
+        <li class="course-item letter-reveal">
+          <h3 class="course-name">エグゼクティブ個人枠</h3>
+          <p class="course-meta">月1回 45〜60分 ／ 8,000円</p>
+          <p class="course-desc">仕事帰りに、家事の合間に。1ヶ月に1回、自分のためだけの時間を持つ。好きな曲、弾いてみたかった曲、それぞれのペースで。「いま始めるのは遅すぎるかしら」—大丈夫、そんなことはありません。</p>
+        </li>
+        <li class="course-item letter-reveal">
+          <h3 class="course-name">こども音楽コース</h3>
+          <p class="course-meta">月3〜4回 30分 ／ 12,000円〜</p>
+          <p class="course-desc">ピアノはもちろん、エレクトーンやほかの楽器にも触れます。「弾く」だけじゃなく「作る」ことも学ぶから、「わたし、曲を作れるんだ!」という驚きがあります。</p>
+        </li>
+        <li class="course-item letter-reveal">
+          <h3 class="course-name">グループ・リトミック</h3>
+          <p class="course-meta">月3回 1回40分 ／ 月額3,000円</p>
+          <p class="course-desc">小さなお子さんと一緒に、音楽に触れる最初のステップ。体を動かしながらリズムを感じて、歌を歌って、音の世界を「たのしい!」と思える時間。</p>
+        </li>
+      </ul>
+      <p class="entry-note">入会金は一律 10,000円です。</p>
+    </section>
+
+    <div class="sep">· · ·</div>
+
+    <div class="policy-note letter-reveal">
+      <p>当教室は「アットホーム」を大切にしていますが、<strong>「安かろう悪かろう」ではありません</strong>。講師歴30年、のべ2,000人を教えてきた経験と技術があります。しっかりとした料金設定で、しっかりとしたレッスンをお約束します。</p>
+      <p>「とにかく安く済ませたい」「子どもを預ける場所として使いたい」—そういう目的の方には、残念ながら合わない教室です。その代わり、<strong>子どもの可能性を音楽で広げたい</strong>方、<strong>自分のために音楽の時間を持ちたい</strong>方には、長く通っていただけています。</p>
+    </div>
+
+    <section class="credentials letter-reveal" id="profile">
+      <div class="prose" style="margin-bottom:var(--space-md);"><p>わたしのことです。</p></div>
+      <div class="cred-grid">
+        <div class="cred-item">洗足学園音楽大学 ピアノ科</div>
+        <div class="cred-item">中学・高校 音楽教員免許</div>
+        <div class="cred-item">ヤマハ音楽教室 システム講師</div>
+        <div class="cred-item wide">2024年5月末退職（グループレッスン担当）</div>
+        <div class="cred-item">講師歴 <strong>30年</strong></div>
+        <div class="cred-item">のべ <strong>2,000人</strong></div>
+      </div>
+    </section>
+
+    <div class="sep">· · ·</div>
+
+    <section class="ps-section" id="contact">
+      <h2 class="ps-heading">p.s. お茶でも飲みに来る感覚で、気軽に覗いてみてください。</h2>
+      <p class="ps-text">見学も受け付けています。教室の雰囲気をそのまま感じてください。駐車場もあります。</p>
+      <form action="#" method="POST">
+        <div class="form-row">
+          <label class="form-label">お名前<span class="req">*</span></label>
+          <input type="text" name="name" class="form-input" required>
+        </div>
+        <div class="form-row">
+          <label class="form-label">メールアドレス<span class="req">*</span></label>
+          <input type="email" name="email" class="form-input" required>
+        </div>
+        <div class="form-row">
+          <label class="form-label">お電話番号</label>
+          <input type="tel" name="phone" class="form-input">
+        </div>
+        <div class="form-row">
+          <label class="form-label">ご興味のあるコース</label>
+          <select name="course" class="form-select">
+            <option value="">選択してください</option>
+            <option value="premium">大人のプレミアムコース（月1回 5,000円）</option>
+            <option value="executive">エグゼクティブ個人枠（月1回 8,000円）</option>
+            <option value="child">こども音楽コース（月3〜4回 12,000円〜）</option>
+            <option value="rhythmic">グループ・リトミック（月3回 3,000円）</option>
+            <option value="other">その他・見学希望</option>
+          </select>
+        </div>
+        <div class="form-row">
+          <label class="form-label">ご質問・ご要望</label>
+          <textarea name="message" class="form-textarea"></textarea>
+        </div>
+        <button type="submit" class="form-submit">送信する</button>
+      </form>
+    </section>
+
+    <div class="signature">
+      <span class="signature-name">Your Name</span>
+    </div>
+
+    <footer class="letter-footer">
+      <p>お茶を淹れて、お待ちしています。</p>
+      <span>浦和美園ピアノ教室 · 埼玉県さいたま市緑区浦和美園 · 駐車場完備</span>
+    </footer>
+  </div>
+</div>
+
+<script>
+gsap.registerPlugin(ScrollTrigger);
+
+const scene = document.getElementById('envelopeScene');
+const flap = document.getElementById('envelopeFlap');
+const seal = document.getElementById('seal');
+const peek = document.getElementById('letterPeek');
+const prompt = document.getElementById('envelopePrompt');
+const letterPage = document.getElementById('letterPage');
+let opened = false;
+
+scene.addEventListener('click', openEnvelope);
+
+function openEnvelope() {
+  if (opened) return;
+  opened = true;
+
+  const tl = gsap.timeline();
+
+  // Hide prompt
+  tl.to(prompt, { opacity: 0, y: 10, duration: .3 });
+
+  // Letter peek slides up slightly
+  tl.to(peek, { opacity: 1, y: -20, duration: .4, ease: 'power2.out' }, '-=.1');
+
+  // Seal fades
+  tl.to(seal, { scale: 1.2, opacity: 0, duration: .3, ease: 'power2.in' }, '-=.2');
+
+  // Flap opens
+  tl.to(flap, {
+    rotateX: -180,
+    duration: .8,
+    ease: 'power2.inOut',
+    transformOrigin: 'top center',
+  }, '-=.1');
+
+  // Whole scene fades
+  tl.to(scene, {
+    opacity: 0, duration: .6, ease: 'power2.in',
+    onComplete: () => {
+      scene.style.display = 'none';
+      letterPage.classList.add('active');
+      letterEntrance();
+    }
+  }, '+=.3');
+}
+
+function letterEntrance() {
+  const letter = document.querySelector('.letter');
+
+  // Letter slides up from below
+  gsap.from(letter, {
+    y: 60, opacity: 0, duration: .8, ease: 'power2.out'
+  });
+
+  // Stagger reveals
+  gsap.from('.letter-nav', { y: 10, opacity: 0, duration: .5, delay: .3, ease: 'power2.out' });
+  gsap.from('.letter-date', { y: 8, opacity: 0, duration: .4, delay: .5, ease: 'power2.out' });
+  gsap.from('.letter-greeting', { y: 16, opacity: 0, duration: .6, delay: .6, ease: 'power2.out' });
+  gsap.from('.prose p', {
+    y: 12, opacity: 0, stagger: .08, duration: .4, delay: .8, ease: 'power2.out'
+  });
+  gsap.from('.photo-frame', {
+    y: 20, opacity: 0, stagger: .15, duration: .5, delay: 1, ease: 'power2.out'
+  });
+
+  // Scroll-triggered reveals
+  gsap.utils.toArray('.letter-reveal').forEach(el => {
+    gsap.from(el, {
+      scrollTrigger: { trigger: el, start: 'top 85%' },
+      y: 16, opacity: 0, duration: .5, ease: 'power2.out'
+    });
+  });
+}
+</script>
+</body>
+</html>
