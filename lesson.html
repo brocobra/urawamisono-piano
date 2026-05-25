@@ -1,0 +1,552 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>レッスン内容 — さいたま浦和美園ピアノ教室</title>
+<link rel="icon" type="image/png" href="piano-logo.png">
+<link rel="apple-touch-icon" href="piano-logo.png">
+<meta name="description" content="さいたま浦和美園ピアノ教室のレッスン内容。年齢に合わせたカリキュラムで、音楽を一生の友にする力を育みます。">
+<meta property="og:title" content="レッスン内容 — さいたま浦和美園ピアノ教室">
+<meta property="og:description" content="幼児から大人まで、年齢に合わせたカリキュラム。講師歴30年の経験で、一人ひとりに合ったレッスンを。">
+<meta property="og:type" content="website">
+<link rel="canonical" href="https://urawamisono-piano.com/lesson.html">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; font-size: 16px; }
+body {
+  font-family: "Hiragino Sans", "Hiragino Kaku Gothic ProN", "Noto Sans JP", "Yu Gothic Medium", sans-serif;
+  color: var(--text);
+  background: var(--cream);
+  line-break: strict;
+  word-break: normal;
+  line-height: 1.8;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+:root {
+  --cream: #FAF6F0;
+  --warm-bg: #F3EBE0;
+  --text: #3D3529;
+  --text-light: #6B5E4F;
+  --text-lighter: #9A8E7F;
+  --accent: #7A8B6F;
+  --accent-dark: #5C6B52;
+  --accent-light: #A3B295;
+  --gold: #C4A265;
+  --gold-light: #E2D4B0;
+  --card-bg: #FFFCF7;
+  --border: #E5DDD0;
+  --white: #FFFFFF;
+  --serif: "Shippori Mincho", "Hiragino Mincho ProN", "Yu Mincho", serif;
+  --sans: "Hiragino Sans", "Hiragino Kaku Gothic ProN", "Noto Sans JP", "Yu Gothic Medium", sans-serif;
+  --max-w: 840px;
+  --max-w-wide: 1000px;
+}
+
+a { color: var(--accent-dark); text-decoration: none; }
+a:hover { color: var(--gold); }
+
+/* ── Navigation ── */
+.nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  background: rgba(250,246,240,.92);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border-bottom: 1px solid var(--border);
+  box-shadow: 0 2px 16px rgba(61,53,41,.06);
+}
+.nav-inner {
+  max-width: var(--max-w-wide);
+  margin: 0 auto; padding: 0 24px;
+  display: flex; align-items: center; justify-content: space-between;
+  height: 64px;
+}
+.nav-logo {
+  font-family: var(--serif);
+  font-size: 1.05rem; font-weight: 500;
+  color: var(--text); letter-spacing: .04em;
+}
+.nav-links { display: flex; gap: 28px; list-style: none; }
+.nav-links a {
+  font-size: .82rem; color: var(--text-light);
+  letter-spacing: .02em; position: relative;
+}
+.nav-links a::after {
+  content: ""; position: absolute; bottom: -4px; left: 50%;
+  width: 0; height: 1.5px; background: var(--accent);
+  transition: width .3s, left .3s;
+}
+.nav-links a:hover::after { width: 100%; left: 0; }
+.nav-links a.active { color: var(--accent-dark); }
+.nav-links a.active::after { width: 100%; left: 0; }
+
+.nav-toggle {
+  display: none; background: none; border: none; cursor: pointer;
+  width: 28px; height: 20px; position: relative;
+}
+.nav-toggle span {
+  display: block; width: 100%; height: 2px;
+  background: var(--text); border-radius: 2px;
+  position: absolute; left: 0; transition: all .3s;
+}
+.nav-toggle span:nth-child(1) { top: 0; }
+.nav-toggle span:nth-child(2) { top: 9px; }
+.nav-toggle span:nth-child(3) { bottom: 0; }
+.nav-toggle.active span:nth-child(1) { top: 9px; transform: rotate(45deg); }
+.nav-toggle.active span:nth-child(2) { opacity: 0; }
+.nav-toggle.active span:nth-child(3) { bottom: 9px; transform: rotate(-45deg); }
+
+/* ── Page Hero ── */
+.page-hero {
+  padding: 140px 24px 60px;
+  text-align: center;
+  position: relative; overflow: hidden;
+  background:
+    radial-gradient(ellipse 80% 60% at 20% 80%, rgba(122,139,111,.08) 0%, transparent 60%),
+    radial-gradient(ellipse 60% 50% at 80% 20%, rgba(196,162,101,.06) 0%, transparent 60%),
+    linear-gradient(180deg, var(--cream) 0%, var(--warm-bg) 100%);
+}
+.page-hero-label {
+  font-size: .75rem; color: var(--accent);
+  letter-spacing: .15em; margin-bottom: 12px;
+}
+.page-hero-title {
+  font-family: var(--serif);
+  font-size: clamp(1.5rem, 4vw, 2.2rem);
+  font-weight: 500; line-height: 1.5; color: var(--text);
+}
+
+/* ── Sections ── */
+.section { padding: 80px 24px; }
+.section--alt { background: var(--warm-bg); }
+.section-inner { max-width: var(--max-w); margin: 0 auto; }
+
+.section-label {
+  font-size: .75rem; color: var(--accent);
+  letter-spacing: .15em; text-align: center;
+  margin-bottom: 12px;
+}
+.section-title {
+  font-family: var(--serif);
+  font-size: clamp(1.3rem, 3vw, 1.75rem);
+  font-weight: 500; text-align: center;
+  line-height: 1.5; margin-bottom: 16px; color: var(--text);
+}
+.section-subtitle {
+  font-size: .95rem; color: var(--text-light);
+  text-align: center; margin-bottom: 48px;
+  line-height: 1.9;
+}
+.divider {
+  width: 48px; height: 2px;
+  background: var(--gold-light);
+  margin: 0 auto 48px; border-radius: 1px;
+}
+
+/* ── Philosophy Quotes ── */
+.quotes {
+  max-width: 600px; margin: 0 auto;
+  display: flex; flex-direction: column; gap: 20px;
+}
+.quote-item {
+  font-family: var(--serif);
+  font-size: 1.1rem;
+  color: var(--text);
+  text-align: center;
+  padding: 16px 24px;
+  border-left: 2px solid var(--accent-light);
+  background: var(--card-bg);
+  border-radius: 0 12px 12px 0;
+  line-height: 1.7;
+}
+
+/* ── Brain / Learning Section ── */
+.brain-box {
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 40px;
+  line-height: 2;
+}
+.brain-box p {
+  font-size: .92rem; color: var(--text-light);
+  margin-bottom: 1.2em;
+}
+.brain-box p:last-child { margin-bottom: 0; }
+.brain-box strong { color: var(--text); font-weight: 500; }
+.brain-highlight {
+  display: flex; flex-wrap: wrap; gap: 12px;
+  justify-content: center;
+  margin: 20px 0;
+}
+.brain-tag {
+  display: inline-block;
+  padding: 8px 20px;
+  background: var(--warm-bg);
+  border: 1px solid var(--border);
+  border-radius: 24px;
+  font-size: .85rem;
+  color: var(--accent-dark);
+  font-weight: 500;
+}
+
+/* ── Age Group Cards ── */
+.age-card {
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 40px;
+  margin-bottom: 32px;
+}
+.age-card:last-child { margin-bottom: 0; }
+.age-badge {
+  display: inline-block; font-size: .7rem;
+  padding: 4px 14px; border-radius: 20px;
+  margin-bottom: 16px; letter-spacing: .04em;
+  font-weight: 500;
+}
+.age-badge--baby { background: #F0E0E8; color: #8B5A6B; }
+.age-badge--child { background: #FFF3E0; color: #A67C3D; }
+.age-badge--adult { background: #E2EBDD; color: #5C6B52; }
+.age-badge--special { background: #E0E8F0; color: #5A6B8B; }
+.age-card-title {
+  font-family: var(--serif);
+  font-size: 1.2rem; font-weight: 500;
+  margin-bottom: 20px; color: var(--text);
+}
+.age-card p {
+  font-size: .92rem; color: var(--text-light);
+  margin-bottom: 1.1em; line-height: 2;
+}
+.age-card p:last-child { margin-bottom: 0; }
+.age-card strong { color: var(--text); font-weight: 500; }
+.age-card-em {
+  font-family: var(--serif);
+  font-size: .95rem;
+  color: var(--accent-dark);
+  line-height: 1.8;
+  padding: 16px 20px;
+  background: var(--warm-bg);
+  border-radius: 10px;
+  margin-top: 8px;
+}
+
+/* ── Instruments ── */
+.instruments {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+  max-width: 600px;
+  margin: 0 auto;
+}
+.instrument-card {
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 28px;
+  text-align: center;
+}
+.instrument-name {
+  font-family: var(--serif);
+  font-size: 1rem; font-weight: 500;
+  color: var(--text); margin-bottom: 8px;
+}
+.instrument-model {
+  font-size: .85rem; color: var(--text-light);
+  line-height: 1.6;
+}
+
+/* ── CTA Banner ── */
+.cta-banner {
+  text-align: center;
+  padding: 24px;
+}
+.cta-link {
+  display: inline-block;
+  padding: 14px 40px;
+  background: var(--accent); color: var(--white);
+  font-size: .9rem; border-radius: 40px;
+  letter-spacing: .06em;
+  transition: background .3s, box-shadow .3s;
+}
+.cta-link:hover {
+  background: var(--accent-dark); color: var(--white);
+  box-shadow: 0 4px 16px rgba(122,139,111,.25);
+}
+
+/* ── Footer ── */
+.footer {
+  background: #3D3529;
+  color: rgba(255,255,255,.6);
+  padding: 48px 24px; text-align: center;
+}
+.footer-logo {
+  font-family: var(--serif); font-size: 1rem;
+  color: rgba(255,255,255,.8);
+  margin-bottom: 8px; letter-spacing: .04em;
+}
+.footer-sub {
+  font-size: .7rem;
+  color: rgba(255,255,255,.35);
+  letter-spacing: .15em;
+  margin-bottom: 16px;
+}
+.footer-info {
+  font-size: .78rem; line-height: 1.9; margin-bottom: 24px;
+}
+.footer-info a { color: rgba(255,255,255,.7); }
+.footer-info a:hover { color: rgba(255,255,255,.9); }
+.footer-copy { font-size: .72rem; color: rgba(255,255,255,.35); }
+
+/* ── Responsive ── */
+@media (max-width: 768px) {
+  .nav-links { display: none; }
+  .nav-toggle { display: block; }
+  .nav-links.open {
+    display: flex; flex-direction: column;
+    position: absolute; top: 64px; left: 0; right: 0;
+    background: rgba(250,246,240,.98);
+    backdrop-filter: blur(8px);
+    padding: 16px 24px 24px; gap: 16px;
+    border-bottom: 1px solid var(--border);
+  }
+  .section { padding: 60px 20px; }
+  .page-hero { padding: 120px 20px 48px; }
+  .age-card { padding: 28px 24px; }
+  .brain-box { padding: 28px 24px; }
+  .instruments { grid-template-columns: 1fr; }
+}
+@media (max-width: 400px) {
+  .page-hero-title { font-size: 1.3rem; }
+  .quote-item { font-size: .95rem; padding: 14px 18px; }
+}
+</style>
+</head>
+<body>
+
+<!-- Nav -->
+<nav class="nav">
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo">さいたま浦和美園ピアノ教室</a>
+    <button class="nav-toggle" id="navToggle" aria-label="メニュー">
+      <span></span><span></span><span></span>
+    </button>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="index.html">ホーム</a></li>
+      <li><a href="lesson.html" class="active">レッスン内容</a></li>
+      <li><a href="index.html#profile">講師紹介</a></li>
+      <li><a href="index.html#contact">お問い合わせ</a></li>
+    </ul>
+  </div>
+</nav>
+
+<!-- Page Hero -->
+<section class="page-hero">
+  <p class="page-hero-label">LESSON</p>
+  <h1 class="page-hero-title">レッスン内容</h1>
+</section>
+
+<!-- Philosophy -->
+<section class="section">
+  <div class="section-inner">
+    <div class="quotes">
+      <div class="quote-item">「やってみようかな？」と思った時が、素質の目覚め</div>
+      <div class="quote-item">音楽は世界の共通語</div>
+      <div class="quote-item">誰にも盗む事の出来ない宝</div>
+      <div class="quote-item">音楽は一生の友達になる</div>
+      <div class="quote-item">継続する事が心を強くし、何事も諦めない力になる</div>
+    </div>
+  </div>
+</section>
+
+<!-- Brain / Learning -->
+<section class="section section--alt">
+  <div class="section-inner">
+    <p class="section-label">MUSIC &amp; BRAIN</p>
+    <h2 class="section-title">音楽がもたらす、脳と心への影響</h2>
+    <div class="divider"></div>
+    <div class="brain-box">
+      <p>東大生のピアノ経験率は63%とされ、学習の基盤となる脳機能やメンタル面での好影響が関係していると分析されています。</p>
+      <p>すべての指を動かすことで脳に刺激を与え、<strong>「直感力」「想像力」「ひらめき力」</strong>などの地頭が良くなります。継続することで忍耐力、自己肯定感が高まり、結果、学力アップにつながります。</p>
+      <div class="brain-highlight">
+        <span class="brain-tag">直感力</span>
+        <span class="brain-tag">想像力</span>
+        <span class="brain-tag">ひらめき力</span>
+        <span class="brain-tag">忍耐力</span>
+        <span class="brain-tag">自己肯定感</span>
+      </div>
+      <p>さいたま浦和美園ピアノ教室では、ただピアノを弾くレッスンではなく、成長過程で一番吸収力の高い内容を年齢に合わせたカリキュラムで提供いたします。</p>
+    </div>
+  </div>
+</section>
+
+<!-- Age Groups -->
+<section class="section">
+  <div class="section-inner">
+    <p class="section-label">CURRICULUM</p>
+    <h2 class="section-title">年齢別レッスン内容</h2>
+    <p class="section-subtitle">一人ひとりの成長に合わせて、最適なレッスンをご案内します</p>
+
+    <!-- 1-3歳 -->
+    <div class="age-card">
+      <span class="age-badge age-badge--baby">1歳〜3歳（入園前）</span>
+      <h3 class="age-card-title">右脳に楽しい刺激をたくさん</h3>
+      <p>小さい時の楽しい記憶は、脳（右脳）に深く刻まれ、その気持ちの高揚感は一生忘れません。</p>
+      <p>音楽をただ流して聴かせる、子供番組をなんとなく観せているだけでは、「お歌が好きみたい…」で終わってしまいます。</p>
+      <p>音楽と共に身体全体で表現し、タンバリンなど様々な小物楽器でリズムを刻み、手先を使う工作で集中して音楽を楽しむ30分。</p>
+      <p>全身で音楽のシャワーを浴び、「楽しい！」が溢れるレッスンをいたします。</p>
+      <p class="age-card-em">右脳に楽しい刺激をたくさん与えることは、穏やかで明るく優しい心が成長し、地頭を良くする素地ができます。まずは純粋に親子で音楽を楽しんでいただけるレッスンを提供いたします。</p>
+    </div>
+
+    <!-- 幼児期 -->
+    <div class="age-card">
+      <span class="age-badge age-badge--child">幼児期〜</span>
+      <h3 class="age-card-title">音と自由に遊べる力を育む</h3>
+      <p>赤ちゃんが言葉を覚える際、字から学びません。たくさん話しかけ、真似をさせながら言葉を習得していくように、曲をたくさん聴いて、音名で歌い、歌ったように楽器で表現する。</p>
+      <p>何の音かがわかり、将来的に楽譜に頼らず、いつでもどこでも演奏でき、音と自由に遊べる力が身につく事を目指します。</p>
+      <p class="age-card-em">それと並行して、単体でリズム、読譜の力をつけるレッスンをします。</p>
+    </div>
+
+    <!-- 児童期 -->
+    <div class="age-card">
+      <span class="age-badge age-badge--child">児童期〜</span>
+      <h3 class="age-card-title">楽譜を読み、表現する力を養う</h3>
+      <p>クラシック曲を演奏する場合、時代背景、作曲者の気持ちを楽譜から忠実に読み取り、再現するかがとても大切ですので、譜読みが重要となります。</p>
+      <p>学習生活に慣れた児童期から、自分で楽譜を読みながら演奏するレッスンをします。</p>
+      <p class="age-card-em">総合的な音楽レッスンの最終目標として、楽譜の無い曲を聴いただけで再現できる力、作曲やアレンジなど音と遊べる力、譜読みが終わった時点ですべてを覚え楽譜に頼らず自由に表現できる力、ピアノだけでなく様々な楽器が演奏できる力の素地をつける事を目指します。</p>
+    </div>
+
+    <!-- 大人 -->
+    <div class="age-card">
+      <span class="age-badge age-badge--adult">大人の方〜</span>
+      <h3 class="age-card-title">いつからでも始められます</h3>
+      <p>子供の時に習いたかったけど機会がなく大人になってしまった。昔は弾けたけどすっかり忘れてしまった。全くわからないけどとにかくピアノを弾いてみたい。</p>
+      <p>日常を充実したい、脳トレ。趣味を増やしたい、ピアノがお飾りになっていてもったいない。演奏してみたい曲があるなど、「やってみようかな？」と少しでも思った方々、ぜひ遊びにいらしてください。</p>
+      <p>大人からのお習い事は、日々の成長が実感でき、「やればできる！」と再確認でき、潤いのある充実した時間へ変わります。</p>
+      <p class="age-card-em">もちろん、皆さまに合わせたレッスンをいたしますので、ご安心ください。レッスンを通して、そのお手伝いをさせてください。</p>
+    </div>
+
+    <!-- 発達障害 -->
+    <div class="age-card">
+      <span class="age-badge age-badge--special">軽度発達障害のお子様</span>
+      <h3 class="age-card-title">お子様に合わせたレッスン</h3>
+      <p>練習したくない、嫌がる、落ち着きがない、ひっこみじあんなど、お子様に不安を感じている保護者様。</p>
+      <p>私はヤマハ音楽教室講師として30年（2024年5月末退職）、グループレッスンを担当いたしました。1歳から大人の方まで、のべ2,000人以上の生徒さんをレッスンさせていただきましたので、様々な指導の引き出しはあります。</p>
+      <p class="age-card-em">専門的な資格はありませんが、ご相談させていただき、納得していただけましたらレッスンさせていただきます。お子様に合わせたレッスンを全力でいたします。</p>
+    </div>
+  </div>
+</section>
+
+<!-- Closing -->
+<section class="section section--alt">
+  <div class="section-inner">
+    <div class="brain-box" style="text-align: center; max-width: 640px; margin: 0 auto;">
+      <p style="font-family: var(--serif); font-size: 1.05rem; color: var(--text); line-height: 2;">何かを細く永く続ける力は、人生を歩んでいく上で心の支えとなり、広く深い視野を持つことができ、何事も負けない強い気持ちが育つと、確信しています。</p>
+    </div>
+  </div>
+</section>
+
+<!-- Instruments -->
+<section class="section">
+  <div class="section-inner">
+    <p class="section-label">EQUIPMENT</p>
+    <h2 class="section-title">所有楽器</h2>
+    <div class="divider"></div>
+    <div class="instruments">
+      <div class="instrument-card">
+        <p class="instrument-name">グランドピアノ</p>
+        <p class="instrument-model">YAMAHA C5</p>
+      </div>
+      <div class="instrument-card">
+        <p class="instrument-name">エレクトーン</p>
+        <p class="instrument-model">ステージア ELS-02C</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="section section--alt">
+  <div class="section-inner cta-banner">
+    <p style="font-family: var(--serif); font-size: 1.1rem; color: var(--text); margin-bottom: 24px;">「やってみようかな？」と思った時が、はじまりです。</p>
+    <a href="index.html#contact" class="cta-link">お問い合わせはこちら</a>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer class="footer">
+  <p class="footer-logo">さいたま浦和美園ピアノ教室</p>
+  <p class="footer-sub">SUP</p>
+  <div class="footer-info">
+    〒339-0028　埼玉県さいたま市岩槻区美園東2-40-82<br>
+    <a href="tel:090-1832-7342">090-1832-7342</a><br>
+    駐車場完備
+  </div>
+  <p class="footer-copy">&copy; さいたま浦和美園ピアノ教室</p>
+</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script>
+gsap.registerPlugin(ScrollTrigger);
+
+// Mobile menu
+const toggle = document.getElementById('navToggle');
+const links = document.getElementById('navLinks');
+toggle.addEventListener('click', () => {
+  toggle.classList.toggle('active');
+  links.classList.toggle('open');
+});
+links.querySelectorAll('a').forEach(a => {
+  a.addEventListener('click', () => {
+    toggle.classList.remove('active');
+    links.classList.remove('open');
+  });
+});
+
+// Scroll animations
+gsap.utils.toArray('.quote-item').forEach((el, i) => {
+  gsap.from(el, {
+    scrollTrigger: { trigger: el, start: 'top 85%' },
+    opacity: 0, x: -20, duration: .6, delay: i * .08, ease: 'power2.out',
+  });
+});
+
+gsap.from('.brain-box', {
+  scrollTrigger: { trigger: '.brain-box', start: 'top 78%' },
+  opacity: 0, y: 30, duration: .8, ease: 'power2.out',
+});
+
+gsap.utils.toArray('.brain-tag').forEach((tag, i) => {
+  gsap.from(tag, {
+    scrollTrigger: { trigger: tag, start: 'top 90%' },
+    opacity: 0, y: 12, duration: .4, delay: i * .07, ease: 'power2.out',
+  });
+});
+
+gsap.utils.toArray('.age-card').forEach((card, i) => {
+  gsap.from(card, {
+    scrollTrigger: { trigger: card, start: 'top 82%' },
+    opacity: 0, y: 40, duration: .7, delay: i * .06, ease: 'power2.out',
+  });
+});
+
+gsap.utils.toArray('.instrument-card').forEach((card, i) => {
+  gsap.from(card, {
+    scrollTrigger: { trigger: card, start: 'top 85%' },
+    opacity: 0, y: 20, duration: .5, delay: i * .1, ease: 'power2.out',
+  });
+});
+
+gsap.from('.cta-banner', {
+  scrollTrigger: { trigger: '.cta-banner', start: 'top 85%' },
+  opacity: 0, y: 20, duration: .6, ease: 'power2.out',
+});
+</script>
+</body>
+</html>
