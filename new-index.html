@@ -1,0 +1,809 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>さいたま浦和美園ピアノ教室 — やってみようかな？と思った時が、素質の目覚め</title>
+<link rel="icon" type="image/png" href="piano-logo.png">
+<link rel="apple-touch-icon" href="piano-logo.png">
+<meta name="description" content="さいたま市岩槻区のピアノ教室。1歳〜シニアまで、脳と心と自信を育てる個人・グループレッスン。講師歴30年・のべ2,000人の実績。無料体験レッスンあり。">
+<meta property="og:title" content="さいたま浦和美園ピアノ教室">
+<meta property="og:description" content="1歳〜シニアまで、脳と心と自信を育てるピアノ教室。講師歴30年、のべ2,000人の実績。">
+<meta property="og:type" content="website">
+<link rel="canonical" href="https://urawamisono-piano.com">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; font-size: 16px; }
+body {
+  font-family: "Hiragino Sans", "Hiragino Kaku Gothic ProN", "Noto Sans JP", "Yu Gothic Medium", sans-serif;
+  color: var(--text);
+  background: var(--cream);
+  line-break: strict;
+  word-break: normal;
+  line-height: 1.8;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+:root {
+  --cream: #FAF6F0;
+  --warm-bg: #F3EBE0;
+  --text: #2C2419;
+  --text-light: #6B5E4F;
+  --text-lighter: #9A8E7F;
+  --accent: #7A8B6F;
+  --accent-dark: #5C6B52;
+  --accent-light: #A3B295;
+  --gold: #C4A265;
+  --gold-light: #E2D4B0;
+  --card-bg: #FFFCF7;
+  --border: #E5DDD0;
+  --white: #FFFFFF;
+  --serif: "Shippori Mincho", "Hiragino Mincho ProN", "Yu Mincho", serif;
+  --sans: "Hiragino Sans", "Hiragino Kaku Gothic ProN", "Noto Sans JP", sans-serif;
+  --max-w: 840px;
+  --max-w-wide: 1000px;
+}
+
+a { color: var(--accent-dark); text-decoration: none; }
+a:hover { color: var(--gold); }
+
+/* ═══ Float Animation ═══ */
+@keyframes float {
+  0%, 100% { transform: translateY(0px) rotate(0deg); }
+  33% { transform: translateY(-12px) rotate(1deg); }
+  66% { transform: translateY(-6px) rotate(-1deg); }
+}
+@keyframes floatSlow {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-18px); }
+}
+@keyframes floatNotes {
+  0% { transform: translateY(0) translateX(0) rotate(0deg); opacity: .15; }
+  25% { transform: translateY(-40px) translateX(10px) rotate(5deg); opacity: .25; }
+  50% { transform: translateY(-80px) translateX(-5px) rotate(-3deg); opacity: .2; }
+  75% { transform: translateY(-120px) translateX(8px) rotate(4deg); opacity: .15; }
+  100% { transform: translateY(-160px) translateX(0) rotate(0deg); opacity: 0; }
+}
+
+.float-el {
+  position: absolute;
+  pointer-events: none;
+  animation: float 6s ease-in-out infinite;
+}
+.float-el:nth-child(2) { animation-duration: 8s; animation-delay: -2s; }
+.float-el:nth-child(3) { animation-duration: 7s; animation-delay: -4s; }
+.float-el:nth-child(4) { animation-duration: 9s; animation-delay: -1s; }
+
+/* ═══ Glow Effect ═══ */
+.glow {
+  position: relative;
+  transition: all .4s ease;
+}
+.glow::after {
+  content: "";
+  position: absolute; inset: -4px;
+  border-radius: inherit;
+  background: radial-gradient(ellipse at center, rgba(122,139,111,.15), transparent 70%);
+  opacity: 0;
+  transition: opacity .4s ease;
+  z-index: -1;
+  filter: blur(12px);
+}
+.glow:hover::after { opacity: 1; }
+.glow:hover { transform: translateY(-4px); }
+
+.glow-gold::after {
+  background: radial-gradient(ellipse at center, rgba(196,162,101,.2), transparent 70%);
+}
+
+/* ═══ Fade Up on Scroll ═══ */
+.fade-up {
+  opacity: 0;
+  transform: translateY(40px);
+  transition: opacity .7s ease, transform .7s ease;
+}
+.fade-up.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+.fade-up-delay-1 { transition-delay: .1s; }
+.fade-up-delay-2 { transition-delay: .2s; }
+.fade-up-delay-3 { transition-delay: .3s; }
+
+/* ═══ Text Reveal ═══ */
+.text-reveal {
+  display: inline-block;
+  overflow: hidden;
+}
+.text-reveal span {
+  display: inline-block;
+  transform: translateY(110%);
+  transition: transform .6s cubic-bezier(.23, 1, .32, 1);
+}
+.text-reveal.visible span {
+  transform: translateY(0);
+}
+.text-reveal span:nth-child(2) { transition-delay: .05s; }
+.text-reveal span:nth-child(3) { transition-delay: .1s; }
+.text-reveal span:nth-child(4) { transition-delay: .15s; }
+.text-reveal span:nth-child(5) { transition-delay: .2s; }
+.text-reveal span:nth-child(6) { transition-delay: .25s; }
+
+/* ═══ Navigation ═══ */
+.nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  background: rgba(250,246,240,.88);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid transparent;
+  transition: border-color .3s, box-shadow .3s;
+}
+.nav.scrolled {
+  border-bottom-color: var(--border);
+  box-shadow: 0 4px 24px rgba(61,53,41,.06);
+}
+.nav-inner {
+  max-width: var(--max-w-wide);
+  margin: 0 auto; padding: 0 24px;
+  display: flex; align-items: center; justify-content: space-between;
+  height: 64px;
+}
+.nav-logo {
+  font-family: var(--serif);
+  font-size: 1rem; font-weight: 500;
+  color: var(--text); letter-spacing: .04em;
+  display: flex; align-items: center; gap: 10px;
+}
+.nav-logo img {
+  width: 32px; height: 32px; border-radius: 6px;
+}
+.nav-links { display: flex; gap: 28px; list-style: none; }
+.nav-links a {
+  font-size: .82rem; color: var(--text-light);
+  letter-spacing: .02em; position: relative;
+  padding: 4px 0;
+}
+.nav-links a::after {
+  content: ""; position: absolute; bottom: -2px; left: 0;
+  width: 0; height: 2px;
+  background: linear-gradient(90deg, var(--accent), var(--gold));
+  transition: width .3s ease;
+}
+.nav-links a:hover::after { width: 100%; }
+
+.nav-toggle {
+  display: none; background: none; border: none; cursor: pointer;
+  width: 28px; height: 20px; position: relative;
+}
+.nav-toggle span {
+  display: block; width: 100%; height: 2px;
+  background: var(--text); border-radius: 2px;
+  position: absolute; left: 0; transition: all .3s;
+}
+.nav-toggle span:nth-child(1) { top: 0; }
+.nav-toggle span:nth-child(2) { top: 9px; }
+.nav-toggle span:nth-child(3) { bottom: 0; }
+.nav-toggle.active span:nth-child(1) { top: 9px; transform: rotate(45deg); }
+.nav-toggle.active span:nth-child(2) { opacity: 0; }
+.nav-toggle.active span:nth-child(3) { bottom: 9px; transform: rotate(-45deg); }
+
+/* ═══ Hero ═══ */
+.hero {
+  min-height: 100vh;
+  display: flex; align-items: center; justify-content: center;
+  text-align: center;
+  padding: 120px 24px 80px;
+  position: relative; overflow: hidden;
+}
+.hero::before {
+  content: "";
+  position: absolute; inset: 0;
+  background:
+    radial-gradient(ellipse 80% 60% at 20% 80%, rgba(122,139,111,.1) 0%, transparent 60%),
+    radial-gradient(ellipse 60% 50% at 80% 20%, rgba(196,162,101,.08) 0%, transparent 60%),
+    linear-gradient(180deg, var(--cream) 0%, #F0E8DA 100%);
+}
+.hero-content { position: relative; z-index: 1; max-width: 680px; }
+.hero-label {
+  font-size: .75rem; color: var(--accent);
+  letter-spacing: .2em; margin-bottom: 24px;
+}
+.hero-copy {
+  font-family: var(--serif);
+  font-size: clamp(1.5rem, 4.5vw, 2.6rem);
+  font-weight: 500; line-height: 1.6;
+  color: var(--text); margin-bottom: 8px;
+}
+.hero-copy em { font-style: normal; color: var(--accent-dark); }
+.hero-sub {
+  font-family: var(--serif);
+  font-size: clamp(.95rem, 2vw, 1.15rem);
+  color: var(--text-light); line-height: 1.8;
+  margin-bottom: 40px;
+}
+.hero-cta {
+  display: inline-block;
+  padding: 14px 40px;
+  background: var(--accent); color: var(--white);
+  font-size: .9rem; border-radius: 40px;
+  letter-spacing: .06em; border: none; cursor: pointer;
+  transition: all .4s ease;
+  box-shadow: 0 4px 20px rgba(122,139,111,.2);
+}
+.hero-cta:hover {
+  background: var(--accent-dark); color: var(--white);
+  box-shadow: 0 6px 32px rgba(122,139,111,.35);
+  transform: translateY(-2px);
+}
+.hero-cta-sub {
+  display: block;
+  font-size: .78rem; color: rgba(255,255,255,.8);
+  margin-top: 8px; letter-spacing: .04em;
+}
+
+/* Floating notes */
+.hero-notes {
+  position: absolute; inset: 0; z-index: 0;
+  pointer-events: none; overflow: hidden;
+}
+.note-particle {
+  position: absolute;
+  color: var(--accent-light);
+  opacity: .15;
+  animation: floatNotes 8s ease-in-out infinite;
+}
+.note-particle:nth-child(2) { animation-delay: -2s; color: var(--gold); animation-duration: 10s; }
+.note-particle:nth-child(3) { animation-delay: -4s; color: var(--accent); animation-duration: 7s; }
+.note-particle:nth-child(4) { animation-delay: -6s; color: var(--gold-light); animation-duration: 9s; }
+.note-particle:nth-child(5) { animation-delay: -1s; color: var(--accent-light); animation-duration: 11s; }
+
+/* Decorative blobs */
+.blob {
+  position: absolute; border-radius: 50%;
+  filter: blur(60px);
+  will-change: transform;
+}
+.blob-1 {
+  width: 300px; height: 300px;
+  background: rgba(122,139,111,.08);
+  top: 10%; left: -5%;
+  animation: floatSlow 8s ease-in-out infinite;
+}
+.blob-2 {
+  width: 250px; height: 250px;
+  background: rgba(196,162,101,.06);
+  bottom: 10%; right: -3%;
+  animation: floatSlow 10s ease-in-out infinite;
+  animation-delay: -3s;
+}
+
+/* ═══ Sections ═══ */
+.section { padding: 80px 24px; position: relative; }
+.section--alt { background: var(--warm-bg); }
+.section-inner { max-width: var(--max-w); margin: 0 auto; }
+
+.section-label {
+  font-size: .75rem; color: var(--accent);
+  letter-spacing: .15em; text-align: center;
+  margin-bottom: 12px;
+}
+.section-title {
+  font-family: var(--serif);
+  font-size: clamp(1.4rem, 3vw, 1.85rem);
+  font-weight: 500; text-align: center;
+  line-height: 1.5; margin-bottom: 16px; color: var(--text);
+}
+.section-subtitle {
+  font-size: .95rem; color: var(--text-light);
+  text-align: center; margin-bottom: 48px; line-height: 1.9;
+}
+.divider {
+  width: 48px; height: 2px;
+  background: linear-gradient(90deg, var(--accent-light), var(--gold));
+  margin: 0 auto 48px; border-radius: 1px;
+}
+
+/* ═══ Classroom Photo ═══ */
+.classroom-photo {
+  max-width: 680px; margin: 0 auto;
+  border-radius: 16px; overflow: hidden;
+  box-shadow: 0 8px 32px rgba(61,53,41,.1);
+}
+.classroom-photo img {
+  width: 100%; display: block;
+  transition: transform .6s ease;
+}
+.classroom-photo:hover img {
+  transform: scale(1.03);
+}
+
+/* ═══ Teacher ═══ */
+.teacher {
+  display: grid;
+  grid-template-columns: 200px 1fr;
+  gap: 48px; align-items: start;
+}
+.teacher-photo {
+  width: 100%; aspect-ratio: 3/4;
+  border-radius: 16px; overflow: hidden;
+  border: 1px solid var(--border);
+  box-shadow: 0 4px 16px rgba(61,53,41,.08);
+}
+.teacher-photo img { width: 100%; height: 100%; object-fit: cover; }
+.teacher-text p {
+  margin-bottom: 1.2em; color: var(--text-light); font-size: .95rem;
+}
+.teacher-text p:last-child { margin-bottom: 0; }
+.teacher-text strong { color: var(--text); font-weight: 500; }
+
+/* ═══ Courses ═══ */
+.course-group-title {
+  font-family: var(--serif);
+  font-size: 1.15rem; font-weight: 500;
+  color: var(--text); text-align: center;
+  margin-bottom: 8px;
+}
+.course-group-fee {
+  text-align: center;
+  font-size: .85rem; color: var(--accent-dark);
+  margin-bottom: 24px;
+}
+.courses-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 24px;
+}
+.course-card {
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 32px 28px;
+  transition: all .4s ease;
+}
+.course-card:hover {
+  border-color: var(--accent-light);
+  box-shadow: 0 8px 32px rgba(122,139,111,.12);
+  transform: translateY(-4px);
+}
+.course-badge {
+  display: inline-block; font-size: .7rem;
+  padding: 4px 12px; border-radius: 20px;
+  margin-bottom: 16px; letter-spacing: .04em;
+}
+.course-badge--personal { background: #E2EBDD; color: #5C6B52; }
+.course-badge--senior { background: #EDE8DF; color: #7A6E5D; }
+.course-badge--group { background: #F0E0E8; color: #8B5A6B; }
+.course-name {
+  font-family: var(--serif); font-size: 1.05rem;
+  font-weight: 500; margin-bottom: 8px; color: var(--text);
+}
+.course-price {
+  font-size: .9rem; color: var(--accent-dark);
+  margin-bottom: 12px; font-weight: 500;
+}
+.course-price span { font-size: 1.2rem; }
+.course-note {
+  font-size: .78rem; color: var(--text-lighter);
+  line-height: 1.6;
+}
+.course-schedule {
+  font-size: .78rem; color: var(--text-lighter);
+  margin-top: 10px; padding-top: 10px;
+  border-top: 1px solid var(--border);
+}
+
+/* ═══ Profile ═══ */
+.profile {
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 48px; align-items: center;
+}
+.profile-text { order: 1; }
+.profile-visual { order: 2; }
+.profile-visual-box {
+  width: 100%; aspect-ratio: 4/3;
+  border-radius: 16px; overflow: hidden;
+  border: 1px solid var(--border);
+  box-shadow: 0 4px 16px rgba(61,53,41,.08);
+}
+.profile-visual-box img { width: 100%; height: 100%; object-fit: cover; }
+.profile-name {
+  font-family: var(--serif); font-size: 1.3rem;
+  font-weight: 500; margin-bottom: 20px;
+}
+.profile-name span {
+  display: block; font-size: .85rem; font-weight: 400;
+  color: var(--text-light); margin-top: 4px; font-family: var(--sans);
+}
+.credential-list { list-style: none; padding: 0; }
+.credential-list li {
+  font-size: .88rem; color: var(--text-light);
+  padding: 6px 0 6px 20px; position: relative; line-height: 1.7;
+}
+.credential-list li::before {
+  content: "";
+  position: absolute; left: 0; top: 14px;
+  width: 6px; height: 6px;
+  border: 1.5px solid var(--accent); border-radius: 50%;
+}
+
+/* ═══ Contact ═══ */
+.contact-info {
+  max-width: 560px; margin: 0 auto;
+}
+.contact-row {
+  display: flex; gap: 16px;
+  padding: 14px 0;
+  border-bottom: 1px solid var(--border);
+  font-size: .92rem;
+  align-items: baseline;
+}
+.contact-row:last-child { border-bottom: none; }
+.contact-label {
+  min-width: 80px; color: var(--text-lighter);
+  font-size: .82rem; font-weight: 500;
+  letter-spacing: .04em;
+}
+.contact-value { color: var(--text); }
+.contact-value a { color: var(--accent-dark); }
+.contact-value a:hover { color: var(--gold); }
+.contact-cta {
+  text-align: center; margin-top: 32px;
+}
+.contact-cta-link {
+  display: inline-block;
+  padding: 14px 40px;
+  background: var(--accent); color: var(--white);
+  font-size: .9rem; border-radius: 40px;
+  letter-spacing: .06em;
+  transition: all .4s ease;
+  box-shadow: 0 4px 20px rgba(122,139,111,.2);
+}
+.contact-cta-link:hover {
+  background: var(--accent-dark); color: var(--white);
+  box-shadow: 0 6px 32px rgba(122,139,111,.35);
+  transform: translateY(-2px);
+}
+
+/* ═══ Footer ═══ */
+.footer {
+  background: #3D3529;
+  color: rgba(255,255,255,.6);
+  padding: 48px 24px; text-align: center;
+}
+.footer-logo {
+  font-family: var(--serif); font-size: 1rem;
+  color: rgba(255,255,255,.8);
+  margin-bottom: 8px; letter-spacing: .04em;
+}
+.footer-sub {
+  font-size: .7rem;
+  color: rgba(255,255,255,.35);
+  letter-spacing: .15em;
+  margin-bottom: 16px;
+}
+.footer-info {
+  font-size: .78rem; line-height: 1.9; margin-bottom: 24px;
+}
+.footer-info a { color: rgba(255,255,255,.7); }
+.footer-info a:hover { color: rgba(255,255,255,.9); }
+.footer-copy { font-size: .72rem; color: rgba(255,255,255,.35); }
+
+/* ═══ Parallax ═══ */
+.parallax-section {
+  position: relative; overflow: hidden;
+}
+.parallax-bg {
+  position: absolute; inset: -20%;
+  z-index: 0;
+  will-change: transform;
+}
+
+/* ═══ Responsive ═══ */
+@media (max-width: 768px) {
+  .nav-links { display: none; }
+  .nav-toggle { display: block; }
+  .nav-links.open {
+    display: flex; flex-direction: column;
+    position: absolute; top: 64px; left: 0; right: 0;
+    background: rgba(250,246,240,.98);
+    backdrop-filter: blur(8px);
+    padding: 16px 24px 24px; gap: 16px;
+    border-bottom: 1px solid var(--border);
+  }
+  .teacher { grid-template-columns: 1fr; gap: 28px; }
+  .teacher-photo { max-width: 200px; margin: 0 auto; }
+  .courses-grid { grid-template-columns: 1fr; }
+  .profile { grid-template-columns: 1fr; gap: 28px; }
+  .profile-text { order: 1; }
+  .profile-visual { order: 0; }
+  .section { padding: 60px 20px; }
+  .hero { padding: 100px 20px 60px; }
+  .blob-1, .blob-2 { display: none; }
+  .contact-row { flex-direction: column; gap: 4px; }
+}
+@media (max-width: 400px) {
+  .hero-copy { font-size: 1.3rem; }
+}
+</style>
+</head>
+<body>
+
+<!-- Nav -->
+<nav class="nav" id="nav">
+  <div class="nav-inner">
+    <a href="#" class="nav-logo"><img src="piano-logo.png" alt="">さいたま浦和美園ピアノ教室</a>
+    <button class="nav-toggle" id="navToggle" aria-label="メニュー">
+      <span></span><span></span><span></span>
+    </button>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="#about">講師の想い</a></li>
+      <li><a href="#courses">コース・料金</a></li>
+      <li><a href="lesson.html">レッスン内容</a></li>
+      <li><a href="#profile">講師紹介</a></li>
+      <li><a href="#contact">お問い合わせ</a></li>
+    </ul>
+  </div>
+</nav>
+
+<!-- Hero -->
+<section class="hero" id="hero">
+  <div class="blob blob-1"></div>
+  <div class="blob blob-2"></div>
+  <div class="hero-notes">
+    <svg class="note-particle" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.5" style="left:10%;top:30%;">
+      <path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/>
+    </svg>
+    <svg class="note-particle" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.5" style="right:12%;top:25%;">
+      <path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/>
+    </svg>
+    <svg class="note-particle" viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.5" style="left:6%;bottom:35%;">
+      <path d="M12 3v10.55A4 4 0 1 0 14 17V7h4"/>
+    </svg>
+    <svg class="note-particle" viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.5" style="right:8%;bottom:30%;">
+      <path d="M12 3v10.55A4 4 0 1 0 14 17V7h4"/>
+    </svg>
+    <svg class="note-particle" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.5" style="left:35%;top:12%;">
+      <path d="M12 3v10.55A4 4 0 1 0 14 17V7h4"/>
+    </svg>
+  </div>
+  <div class="hero-content">
+    <p class="hero-label text-reveal"><span>SAITAMA</span> <span>URAWA</span> <span>MISONO</span> <span>PIANO</span></p>
+    <h1 class="hero-copy text-reveal"><span><em>「やってみようかな？」</em></span><span><br>と思った時が、</span><span><br>素質の目覚め</span></h1>
+    <p class="hero-sub fade-up">1歳〜シニアまで、脳と心と自信を育てるピアノ教室</p>
+    <a href="#contact" class="hero-cta glow fade-up">無料体験レッスン<span class="hero-cta-sub">お気軽にお問い合わせください</span></a>
+  </div>
+</section>
+
+<!-- Classroom -->
+<section class="section section--alt parallax-section" id="classroom">
+  <div class="section-inner">
+    <p class="section-label fade-up">CLASSROOM</p>
+    <h2 class="section-title text-reveal"><span>教</span><span>室</span><span>の</span><span>よ</span><span>う</span><span>す</span></h2>
+    <div class="divider fade-up"></div>
+    <div class="classroom-photo glow glow-gold fade-up">
+      <img src="home.jpg" alt="教室のようす">
+    </div>
+  </div>
+</section>
+
+<!-- Teacher Story -->
+<section class="section" id="about">
+  <div class="section-inner">
+    <p class="section-label fade-up">GREETING</p>
+    <h2 class="section-title text-reveal"><span>講</span><span>師</span><span>の</span><span>想</span><span>い</span></h2>
+    <div class="divider fade-up"></div>
+    <div class="teacher">
+      <div class="teacher-photo glow fade-up">
+        <img src="teacher.jpg" alt="講師写真">
+      </div>
+      <div class="teacher-text">
+        <p class="fade-up">5歳からピアノを習い始めました。</p>
+        <p class="fade-up fade-up-delay-1">幼い頃から「何かを教える仕事がしたい」と思っていました。高校1年の時、中学校の音楽教師を目指して音大へ進学しました。</p>
+        <p class="fade-up fade-up-delay-1">その後、教師の道は断念しましたが、ヤマハ音楽教室の講師となり、以来30年間、1歳のお子さんから大人の方まで、のべ2,000人以上の方にレッスンさせていただきました。</p>
+        <p class="fade-up fade-up-delay-2">一児（息子）の母です。家ではフレンチブルドッグの女の子と暮らしています。</p>
+        <p class="fade-up fade-up-delay-2"><strong>2024年5月末にヤマハを退職し、自分の教室を開くことにしました。<br>一人ひとりに向き合う時間を、たっぷり取りたい</strong>—それが、独立の一番の理由です。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Courses -->
+<section class="section section--alt" id="courses">
+  <div class="section-inner">
+    <p class="section-label fade-up">COURSES</p>
+    <h2 class="section-title text-reveal"><span>コ</span><span>ー</span><span>ス</span><span>・</span><span>料</span><span>金</span></h2>
+    <div class="divider fade-up"></div>
+
+    <p class="course-group-title fade-up">個人レッスン</p>
+    <p class="course-group-fee fade-up">入会金 10,000円</p>
+    <div class="courses-grid">
+      <div class="course-card glow fade-up">
+        <span class="course-badge course-badge--personal">年少〜大人</span>
+        <h3 class="course-name">月3回 40分</h3>
+        <p class="course-price"><span>10,000円</span>／月（税込）</p>
+        <p class="course-note">一人ひとりのペースに合わせた個人レッスン。基礎から好きな曲まで、無理なく進めます。</p>
+      </div>
+      <div class="course-card glow fade-up fade-up-delay-1">
+        <span class="course-badge course-badge--personal">年少〜大人</span>
+        <h3 class="course-name">月3回 60分</h3>
+        <p class="course-price"><span>13,000円</span>／月（税込）</p>
+        <p class="course-note">じっくり取り組みたい方、複数の楽器に触れたい方に。1回のレッスンをたっぷり使えます。</p>
+      </div>
+      <div class="course-card glow fade-up">
+        <span class="course-badge course-badge--senior">シニア 60歳以上</span>
+        <h3 class="course-name">月2回 30分</h3>
+        <p class="course-price"><span>5,000円</span>／月（税込）</p>
+        <p class="course-note">シニア特別料金。9時〜14時の時間帯限定。</p>
+        <p class="course-schedule">受付時間 9:00〜14:00</p>
+      </div>
+      <div class="course-card glow fade-up fade-up-delay-1">
+        <span class="course-badge course-badge--group">3歳以下（入園前）</span>
+        <h3 class="course-name">幼児グループレッスン</h3>
+        <p class="course-price">月3回 30分 ／ <span>3,000円</span>／月（税込）</p>
+        <p class="course-note">3名までの少人数グループ。体を動かしながらリズムと音を楽しむレッスン。</p>
+        <p class="course-schedule">10:00〜 ／ 11:00〜</p>
+      </div>
+    </div>
+    <p class="fade-up" style="text-align:center; margin-top:24px; font-size:.85rem; color:var(--text-lighter);">すべて税込み料金 ／ 無料体験レッスン（30分）</p>
+  </div>
+</section>
+
+<!-- Profile -->
+<section class="section" id="profile">
+  <div class="section-inner">
+    <p class="section-label fade-up">TEACHER</p>
+    <h2 class="section-title text-reveal"><span>講</span><span>師</span><span>紹</span><span>介</span></h2>
+    <div class="divider fade-up"></div>
+    <div class="profile">
+      <div class="profile-text fade-up">
+        <h3 class="profile-name">
+          講師名
+          <span>さいたま浦和美園ピアノ教室 代表</span>
+        </h3>
+        <ul class="credential-list">
+          <li>洗足学園音楽大学 ピアノ科 卒業</li>
+          <li>中学・高校 音楽教員免許 取得</li>
+          <li>ヤマハ音楽教室 システム講師（グループレッスン担当）</li>
+          <li>2024年5月末退職</li>
+          <li>講師歴 30年</li>
+          <li>のべ 2,000人 レッスン実績</li>
+          <li>一児（息子）の母</li>
+        </ul>
+      </div>
+      <div class="profile-visual fade-up fade-up-delay-1">
+        <div class="profile-visual-box glow">
+          <img src="teacher2.jpg" alt="講師写真">
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Contact -->
+<section class="section section--alt" id="contact">
+  <div class="section-inner">
+    <p class="section-label fade-up">CONTACT</p>
+    <h2 class="section-title text-reveal"><span>お</span><span>問</span><span>い</span><span>合</span><span>わ</span><span>せ</span></h2>
+    <div class="divider fade-up"></div>
+    <div class="contact-info fade-up">
+      <div class="contact-row">
+        <span class="contact-label">住所</span>
+        <span class="contact-value">〒339-0028<br>埼玉県さいたま市岩槻区美園東2-40-82</span>
+      </div>
+      <div class="contact-row">
+        <span class="contact-label">電話</span>
+        <span class="contact-value"><a href="tel:090-1832-7342">090-1832-7342</a></span>
+      </div>
+      <div class="contact-row">
+        <span class="contact-label">メール</span>
+        <span class="contact-value"><a href="mailto:saitama.urawamisono.piano.school@gmail.com">saitama.urawamisono.piano.school@gmail.com</a></span>
+      </div>
+      <div class="contact-row">
+        <span class="contact-label">レッスン日</span>
+        <span class="contact-value">火・水・金・土・日</span>
+      </div>
+      <div class="contact-row">
+        <span class="contact-label">時間</span>
+        <span class="contact-value">10:00〜20:00</span>
+      </div>
+      <div class="contact-row">
+        <span class="contact-label"></span>
+        <span class="contact-value" style="font-size:.82rem; color:var(--text-lighter);">詳細はお問い合わせください</span>
+      </div>
+    </div>
+    <div class="contact-cta fade-up">
+      <a href="tel:090-1832-7342" class="contact-cta-link glow">お電話でのお問い合わせ</a>
+    </div>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer class="footer">
+  <p class="footer-logo">さいたま浦和美園ピアノ教室</p>
+  <p class="footer-sub">SUP</p>
+  <div class="footer-info">
+    〒339-0028　埼玉県さいたま市岩槻区美園東2-40-82<br>
+    <a href="tel:090-1832-7342">090-1832-7342</a><br>
+    レッスン日：火・水・金・土・日　10:00〜20:00<br>
+    駐車場完備
+  </div>
+  <p class="footer-copy">&copy; さいたま浦和美園ピアノ教室</p>
+</footer>
+
+<script>
+// ═══ Scroll Fade-Up (Intersection Observer) ═══
+const fadeObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+    }
+  });
+}, { threshold: 0.15, rootMargin: '0px 0px -40px 0px' });
+
+document.querySelectorAll('.fade-up').forEach(el => fadeObserver.observe(el));
+
+// ═══ Text Reveal Animation ═══
+const textObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+    }
+  });
+}, { threshold: 0.3 });
+
+document.querySelectorAll('.text-reveal').forEach(el => textObserver.observe(el));
+
+// ═══ Parallax on Scroll ═══
+const parallaxSections = document.querySelectorAll('.parallax-section');
+window.addEventListener('scroll', () => {
+  const scrollY = window.scrollY;
+
+  // Nav scroll effect
+  document.getElementById('nav').classList.toggle('scrolled', scrollY > 20);
+
+  // Parallax blobs
+  parallaxSections.forEach(section => {
+    const rect = section.getBoundingClientRect();
+    const speed = 0.15;
+    const offset = rect.top * speed;
+    const blobs = section.querySelectorAll('.blob');
+    blobs.forEach(blob => {
+      blob.style.transform = `translateY(${offset}px)`;
+    });
+  });
+
+  // Hero parallax
+  const hero = document.getElementById('hero');
+  if (hero) {
+    const heroContent = hero.querySelector('.hero-content');
+    const heroNotes = hero.querySelector('.hero-notes');
+    if (heroContent && scrollY < window.innerHeight) {
+      heroContent.style.transform = `translateY(${scrollY * 0.3}px)`;
+      heroContent.style.opacity = 1 - (scrollY / (window.innerHeight * 0.8));
+    }
+    if (heroNotes && scrollY < window.innerHeight) {
+      heroNotes.style.transform = `translateY(${scrollY * 0.15}px)`;
+    }
+  }
+}, { passive: true });
+
+// ═══ Mobile menu ═══
+const toggle = document.getElementById('navToggle');
+const links = document.getElementById('navLinks');
+toggle.addEventListener('click', () => {
+  toggle.classList.toggle('active');
+  links.classList.toggle('open');
+});
+links.querySelectorAll('a').forEach(a => {
+  a.addEventListener('click', () => {
+    toggle.classList.remove('active');
+    links.classList.remove('open');
+  });
+});
+</script>
+</body>
+</html>

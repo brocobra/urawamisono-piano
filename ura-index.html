@@ -1,0 +1,542 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SUP — Ordo Musicae</title>
+<link rel="icon" type="image/png" href="piano-logo.png">
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;900&family=Cinzel+Decorative:wght@400;700&family=Noto+Sans+JP:wght@400;700&display=swap');
+
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+
+:root{
+  --void:#08080f;
+  --abyss:#0c0c18;
+  --gold:#c9a84c;
+  --gold-dim:#6b5a2e;
+  --gold-bright:#e8cc6e;
+  --bone:#b8ad9a;
+  --shadow:#3a3640;
+  --veil:rgba(8,8,15,.7);
+  --serif:"Cinzel","Shippori Mincho",serif;
+  --sans:"Noto Sans JP","Hiragino Sans",sans-serif;
+  --deco:"Cinzel Decorative","Cinzel",serif;
+}
+
+body{
+  font-family:var(--sans);
+  background:var(--void);color:var(--bone);
+  line-break:strict;word-break:normal;line-height:1.8;
+  -webkit-font-smoothing:antialiased;
+  overflow-x:hidden;
+}
+
+/* ═══ VEIL OVERLAY ═══ */
+body::before{
+  content:"";position:fixed;inset:0;z-index:9998;pointer-events:none;
+  background:radial-gradient(ellipse at 50% 50%,transparent 40%,rgba(8,8,15,.5) 100%);
+}
+
+/* ═══ SACRED GEOMETRY ═══ */
+.geometry{
+  position:absolute;inset:0;pointer-events:none;
+  opacity:.03;
+}
+.geometry circle,.geometry line,.geometry polygon{
+  stroke:var(--gold);fill:none;stroke-width:.5;
+}
+
+a{color:var(--gold);text-decoration:none;transition:color .3s}
+a:hover{color:var(--gold-bright)}
+
+/* ═══ NAV ═══ */
+.nav{
+  position:fixed;top:0;left:0;right:0;z-index:100;
+  display:flex;align-items:center;justify-content:center;
+  height:60px;
+  background:var(--veil);
+  backdrop-filter:blur(8px);
+  border-bottom:1px solid rgba(201,168,76,.08);
+}
+.nav-links{display:flex;gap:40px;list-style:none}
+.nav-links a{
+  font-family:var(--serif);font-size:.65rem;color:var(--gold-dim);
+  letter-spacing:.25em;text-transform:uppercase;
+  transition:color .3s;
+}
+.nav-links a:hover{color:var(--gold)}
+
+.nav-toggle{display:none;background:none;border:none;cursor:pointer;color:var(--gold);font-size:1.2rem}
+
+/* ═══ HERO ═══ */
+.hero{
+  min-height:100vh;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  text-align:center;
+  padding:80px 24px;
+  position:relative;
+  background:
+    radial-gradient(ellipse at 50% 40%,rgba(201,168,76,.04) 0%,transparent 50%),
+    var(--void);
+}
+
+/* The Eye */
+.eye-container{
+  position:relative;width:200px;height:200px;
+  margin-bottom:40px;
+}
+.eye-outer{
+  position:absolute;inset:0;
+  border:1px solid var(--gold-dim);
+  border-radius:50%;
+  opacity:.3;
+  animation:rotate 60s linear infinite;
+}
+.eye-middle{
+  position:absolute;inset:20%;
+  border:1px solid var(--gold-dim);
+  border-radius:50%;
+  opacity:.4;
+  animation:rotate 40s linear infinite reverse;
+}
+.eye-inner{
+  position:absolute;inset:40%;
+  border:1px solid var(--gold);
+  border-radius:50%;
+  opacity:.5;
+  animation:rotate 20s linear infinite;
+}
+.eye-core{
+  position:absolute;top:50%;left:50%;
+  width:12px;height:12px;
+  background:var(--gold);
+  border-radius:50%;
+  transform:translate(-50%,-50%);
+  box-shadow:0 0 30px rgba(201,168,76,.3),0 0 60px rgba(201,168,76,.1);
+}
+@keyframes rotate{from{transform:rotate(0)}to{transform:rotate(360deg)}}
+
+/* Triangle above eye */
+.triangle-up{
+  width:0;height:0;
+  border-left:30px solid transparent;
+  border-right:30px solid transparent;
+  border-bottom:52px solid transparent;
+  position:absolute;top:-20px;left:50%;transform:translateX(-50%);
+  border-bottom-color:rgba(201,168,76,.06);
+}
+
+.hero-order{
+  font-family:var(--serif);font-size:.6rem;
+  color:var(--gold-dim);letter-spacing:.4em;
+  margin-bottom:16px;
+}
+.hero-title{
+  font-family:var(--deco);font-size:clamp(2rem,8vw,4rem);
+  color:var(--gold);
+  letter-spacing:.15em;
+  margin-bottom:8px;
+  text-shadow:0 0 40px rgba(201,168,76,.15);
+}
+.hero-latin{
+  font-family:var(--serif);font-size:.7rem;
+  color:var(--gold-dim);letter-spacing:.2em;
+  font-style:italic;margin-bottom:32px;
+}
+.hero-motto{
+  font-size:.85rem;color:var(--shadow);
+  max-width:480px;margin-bottom:40px;line-height:2;
+}
+.hero-motto em{font-style:normal;color:var(--gold)}
+
+.hero-cta{
+  display:inline-block;
+  padding:12px 48px;
+  font-family:var(--serif);font-size:.7rem;
+  letter-spacing:.2em;text-transform:uppercase;
+  color:var(--void);background:var(--gold);
+  border:1px solid var(--gold);
+  transition:all .3s;
+}
+.hero-cta:hover{background:transparent;color:var(--gold)}
+
+/* ═══ DIVIDER ═══ */
+.sigil-divider{
+  display:flex;align-items:center;justify-content:center;
+  gap:16px;margin:0 auto 48px;
+  color:var(--gold-dim);opacity:.3;
+}
+.sigil-divider::before,.sigil-divider::after{
+  content:"";width:60px;height:1px;
+  background:linear-gradient(90deg,transparent,var(--gold-dim));
+}
+.sigil-divider::after{background:linear-gradient(90deg,var(--gold-dim),transparent)}
+
+/* ═══ SECTIONS ═══ */
+.sec{padding:96px 24px;position:relative}
+.sec--abyss{background:var(--abyss)}
+.sec--border{border-top:1px solid rgba(201,168,76,.06)}
+.sec-inner{max-width:800px;margin:0 auto}
+
+.sec-numeral{
+  font-family:var(--serif);font-size:.6rem;
+  color:var(--gold-dim);letter-spacing:.3em;
+  text-align:center;margin-bottom:12px;
+}
+.sec-title{
+  font-family:var(--deco);font-size:clamp(1.4rem,4vw,2.2rem);
+  color:var(--gold);letter-spacing:.1em;
+  text-align:center;margin-bottom:16px;
+  text-shadow:0 0 30px rgba(201,168,76,.08);
+}
+.sec-subtitle{
+  font-family:var(--serif);font-size:.75rem;font-style:italic;
+  color:var(--shadow);text-align:center;margin-bottom:48px;
+  letter-spacing:.08em;
+}
+
+/* ═══ TEACHER ═══ */
+.teacher-grid{
+  display:grid;grid-template-columns:1fr 1fr;
+  gap:64px;align-items:start;
+}
+.teacher-text p{color:var(--shadow);font-size:.9rem;margin-bottom:1.1em}
+.teacher-text p:last-child{margin-bottom:0}
+.teacher-text strong{color:var(--bone);font-weight:700}
+
+.seal-section{
+  margin-top:40px;padding:24px;
+  border:1px solid rgba(201,168,76,.1);
+  background:rgba(201,168,76,.02);
+}
+.seal-label{
+  font-family:var(--serif);font-size:.55rem;
+  color:var(--gold-dim);letter-spacing:.3em;margin-bottom:12px;
+}
+.cred{list-style:none}
+.cred li{
+  font-size:.82rem;color:var(--shadow);
+  padding:6px 0 6px 16px;position:relative;
+  border-bottom:1px solid rgba(201,168,76,.04);
+}
+.cred li::before{
+  content:"◈";position:absolute;left:0;
+  color:var(--gold-dim);font-size:.6rem;
+}
+
+/* ═══ COURSES ═══ */
+.course-order{
+  text-align:center;
+  font-family:var(--serif);font-size:.85rem;
+  color:var(--gold);letter-spacing:.08em;
+  margin-bottom:8px;
+}
+.course-fee{text-align:center;font-size:.75rem;color:var(--gold-dim);margin-bottom:32px}
+
+.courses-grid{
+  display:grid;grid-template-columns:1fr 1fr;
+  gap:24px;
+}
+.course{
+  border:1px solid rgba(201,168,76,.08);
+  padding:32px 24px;
+  transition:border-color .3s;
+}
+.course:hover{border-color:rgba(201,168,76,.2)}
+.course-numeral{
+  font-family:var(--serif);font-size:1.8rem;
+  color:rgba(201,168,76,.08);line-height:1;
+  margin-bottom:12px;
+}
+.course-name{
+  font-family:var(--serif);font-size:.95rem;
+  color:var(--bone);letter-spacing:.06em;
+  margin-bottom:8px;
+}
+.course-price{font-size:.85rem;color:var(--gold);margin-bottom:12px}
+.course-price span{font-size:1.1rem;font-weight:700}
+.course-note{font-size:.75rem;color:var(--shadow);line-height:1.6}
+.course-note-time{font-size:.7rem;color:rgba(201,168,76,.3);margin-top:8px}
+
+.course-footer{
+  text-align:center;margin-top:24px;
+  font-size:.72rem;color:rgba(201,168,76,.2);
+  letter-spacing:.05em;
+}
+
+/* ═══ PROFILE ═══ */
+.profile-grid{
+  display:grid;grid-template-columns:1fr 1fr;
+  gap:64px;align-items:center;
+}
+.profile-name{
+  font-family:var(--serif);font-size:1.5rem;
+  color:var(--gold);letter-spacing:.06em;
+  margin-bottom:6px;
+}
+.profile-role{font-size:.78rem;color:var(--shadow);margin-bottom:24px}
+.profile-bio{font-size:.85rem;color:var(--shadow);line-height:1.9}
+
+/* ═══ CONTACT ═══ */
+.contact-grid{max-width:540px;margin:0 auto}
+.contact-row{
+  display:grid;grid-template-columns:90px 1fr;gap:16px;
+  padding:12px 0;
+  border-bottom:1px solid rgba(201,168,76,.05);
+  font-size:.85rem;align-items:baseline;
+}
+.contact-row:last-child{border-bottom:none}
+.contact-label{
+  font-family:var(--serif);font-size:.55rem;
+  color:var(--gold-dim);letter-spacing:.15em;
+}
+.contact-value{color:var(--shadow)}
+.contact-value a{color:var(--bone)}
+.contact-value a:hover{color:var(--gold)}
+
+.contact-cta{text-align:center;margin-top:40px}
+
+/* ═══ FOOTER ═══ */
+.footer{
+  padding:48px 24px;text-align:center;
+  border-top:1px solid rgba(201,168,76,.06);
+}
+.footer-name{
+  font-family:var(--deco);font-size:.85rem;
+  color:var(--gold-dim);letter-spacing:.1em;
+}
+.footer-sub{font-size:.55rem;color:rgba(201,168,76,.2);letter-spacing:.3em;margin:6px 0 16px}
+.footer-info{font-size:.72rem;color:rgba(201,168,76,.15);line-height:2;margin-bottom:20px}
+.footer-info a{color:rgba(201,168,76,.25)}
+.footer-info a:hover{color:var(--gold)}
+.footer-copy{font-size:.55rem;color:rgba(201,168,76,.08);letter-spacing:.1em}
+
+/* ═══ RESPONSIVE ═══ */
+@media(max-width:768px){
+  .nav-links{display:none}
+  .nav-toggle{display:block}
+  .nav-links.open{
+    display:flex;flex-direction:column;
+    position:absolute;top:60px;left:0;right:0;
+    background:var(--veil);backdrop-filter:blur(8px);
+    padding:16px 24px;gap:16px;
+    border-bottom:1px solid rgba(201,168,76,.08);
+  }
+  .teacher-grid,.profile-grid{grid-template-columns:1fr;gap:32px}
+  .courses-grid{grid-template-columns:1fr}
+  .sec{padding:64px 20px}
+  .contact-row{grid-template-columns:1fr;gap:4px}
+  .eye-container{width:150px;height:150px}
+}
+</style>
+</head>
+<body>
+
+<!-- Nav -->
+<nav class="nav">
+  <button class="nav-toggle" id="navToggle" aria-label="MENU">◈</button>
+  <ul class="nav-links" id="navLinks">
+    <li><a href="#about">I · 講師</a></li>
+    <li><a href="#courses">II · コース</a></li>
+    <li><a href="#profile">III · 紹介</a></li>
+    <li><a href="#contact">IV · 参会</a></li>
+  </ul>
+</nav>
+
+<!-- Hero -->
+<section class="hero">
+
+  <!-- Sacred Geometry Background -->
+  <svg class="geometry" viewBox="0 0 800 800">
+    <circle cx="400" cy="400" r="300"/>
+    <circle cx="400" cy="400" r="200"/>
+    <circle cx="400" cy="400" r="100"/>
+    <polygon points="400,100 650,550 150,550"/>
+    <polygon points="400,700 150,250 650,250"/>
+    <line x1="400" y1="100" x2="400" y2="700"/>
+    <line x1="100" y1="400" x2="700" y2="400"/>
+    <circle cx="400" cy="400" r="50"/>
+  </svg>
+
+  <div class="eye-container">
+    <div class="eye-outer"></div>
+    <div class="eye-middle"></div>
+    <div class="eye-inner"></div>
+    <div class="eye-core"></div>
+    <div class="triangle-up"></div>
+  </div>
+
+  <p class="hero-order">ORDO MUSICAE · ESTABLISHED 2024</p>
+  <h1 class="hero-title">SUP</h1>
+  <p class="hero-latin">SONUS · UNIVERSUM · PERFECTIO</p>
+  <div class="sigil-divider">✦</div>
+  <p class="hero-motto">
+    「やってみようかな？」と思った時が、<em>素質の目覚め</em><br>
+    1歳〜シニアまで、脳と心と自信を育てるピアノ教室
+  </p>
+  <a href="#contact" class="hero-cta">Initiation</a>
+</section>
+
+<!-- About -->
+<section class="sec sec--border" id="about">
+  <div class="sec-inner">
+    <p class="sec-numeral">— I —</p>
+    <h2 class="sec-title">講師の想い</h2>
+    <p class="sec-subtitle">A Message from the Founder</p>
+    <div class="sigil-divider">◈</div>
+
+    <div class="teacher-grid">
+      <div class="teacher-text">
+        <p>5歳からピアノを習い始めました。</p>
+        <p>幼い頃から「何かを教える仕事がしたい」と思っていました。高校1年の時、中学校の音楽教師を目指して音大へ進学しました。</p>
+        <p>その後、教師の道は断念しましたが、ヤマハ音楽教室の講師となり、以来30年間、1歳のお子さんから大人の方まで、のべ2,000人以上の方にレッスンさせていただきました。</p>
+        <p>一児（息子）の母です。家ではフレンチブルドッグの女の子と暮らしています。</p>
+        <p><strong>2024年5月末にヤマハを退職し、自分の教室を開くことにしました。一人ひとりに向き合う時間を、たっぷり取りたい</strong>—それが、独立の一番の理由です。</p>
+      </div>
+      <div class="seal-section">
+        <p class="seal-label">CREDENTIALS</p>
+        <ul class="cred">
+          <li>洗足学園音楽大学 ピアノ科 卒業</li>
+          <li>中学・高校 音楽教員免許 取得</li>
+          <li>ヤマハ音楽教室 システム講師（グループレッスン担当）</li>
+          <li>2024年5月末退職</li>
+          <li>講師歴 30年</li>
+          <li>のべ 2,000人 レッスン実績</li>
+          <li>一児（息子）の母</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Courses -->
+<section class="sec sec--abyss sec--border" id="courses">
+  <div class="sec-inner">
+    <p class="sec-numeral">— II —</p>
+    <h2 class="sec-title">コース・料金</h2>
+    <p class="sec-subtitle">Curriculum & Dues</p>
+    <div class="sigil-divider">✦</div>
+
+    <p class="course-order">個人レッスン</p>
+    <p class="course-fee">入会金 10,000円</p>
+
+    <div class="courses-grid">
+      <div class="course">
+        <p class="course-numeral">I</p>
+        <h3 class="course-name">月3回 40分</h3>
+        <p class="course-price"><span>10,000</span>円／月</p>
+        <p class="course-note">一人ひとりのペースに合わせた個人レッスン。基礎から好きな曲まで。</p>
+      </div>
+      <div class="course">
+        <p class="course-numeral">II</p>
+        <h3 class="course-name">月3回 60分</h3>
+        <p class="course-price"><span>13,000</span>円／月</p>
+        <p class="course-note">じっくり取り組みたい方、複数の楽器に触れたい方に。</p>
+      </div>
+      <div class="course">
+        <p class="course-numeral">III</p>
+        <h3 class="course-name">月2回 30分</h3>
+        <p class="course-price"><span>5,000</span>円／月</p>
+        <p class="course-note">シニア特別料金。60歳以上限定。</p>
+        <p class="course-note-time">受付時間 9:00〜14:00</p>
+      </div>
+      <div class="course">
+        <p class="course-numeral">IV</p>
+        <h3 class="course-name">グループ 30分</h3>
+        <p class="course-price"><span>3,000</span>円／月</p>
+        <p class="course-note">3歳以下（入園前）3名まで。体を動かしながらリズムと音を楽しむ。</p>
+        <p class="course-note-time">10:00〜 ／ 11:00〜</p>
+      </div>
+    </div>
+    <p class="course-footer">すべて税込み料金 ／ グループレッスン入会金 5,000円 ／ 無料体験レッスン（30分）</p>
+  </div>
+</section>
+
+<!-- Profile -->
+<section class="sec sec--border" id="profile">
+  <div class="sec-inner">
+    <p class="sec-numeral">— III —</p>
+    <h2 class="sec-title">講師紹介</h2>
+    <p class="sec-subtitle">The Teacher</p>
+    <div class="sigil-divider">◈</div>
+
+    <div class="profile-grid">
+      <div>
+        <h3 class="profile-name">講師名</h3>
+        <p class="profile-role">さいたま浦和美園ピアノ教室 代表</p>
+        <p class="profile-bio">
+          洗足学園音楽大学 ピアノ科 卒業後、ヤマハ音楽教室で30年間グループレッスンを担当。のべ2,000人以上の生徒に向き合ってきた経験が、一人ひとりに合わせた指導の基盤にある。
+        </p>
+      </div>
+      <div class="seal-section">
+        <p class="seal-label">INSTRUMENTA</p>
+        <ul class="cred">
+          <li>YAMAHA C5 Grand Piano</li>
+          <li>Stagea ELS-02C</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Contact -->
+<section class="sec sec--abyss sec--border" id="contact">
+  <div class="sec-inner">
+    <p class="sec-numeral">— IV —</p>
+    <h2 class="sec-title">お問い合わせ</h2>
+    <p class="sec-subtitle">Seek Entry</p>
+    <div class="sigil-divider">✦</div>
+
+    <div class="contact-grid">
+      <div class="contact-row">
+        <span class="contact-label">LOCUS</span>
+        <span class="contact-value">〒339-0028 埼玉県さいたま市岩槻区美園東2-40-82</span>
+      </div>
+      <div class="contact-row">
+        <span class="contact-label">VOCARE</span>
+        <span class="contact-value"><a href="tel:090-1832-7342">090-1832-7342</a></span>
+      </div>
+      <div class="contact-row">
+        <span class="contact-label">EPISTULA</span>
+        <span class="contact-value"><a href="mailto:saitama.urawamisono.piano.school@gmail.com">saitama.urawamisono.piano.school@gmail.com</a></span>
+      </div>
+      <div class="contact-row">
+        <span class="contact-label">DIES</span>
+        <span class="contact-value">火・水・金・土・日</span>
+      </div>
+      <div class="contact-row">
+        <span class="contact-label">HORAE</span>
+        <span class="contact-value">10:00〜20:00</span>
+      </div>
+      <div class="contact-row">
+        <span class="contact-label"></span>
+        <span class="contact-value" style="font-size:.75rem;color:var(--gold-dim)">詳細はお問い合わせください</span>
+      </div>
+    </div>
+    <div class="contact-cta">
+      <a href="tel:090-1832-7342" class="hero-cta">Seek Contact</a>
+    </div>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer class="footer">
+  <p class="footer-name">さいたま浦和美園ピアノ教室</p>
+  <p class="footer-sub">SUP</p>
+  <div class="footer-info">
+    〒339-0028 埼玉県さいたま市岩槻区美園東2-40-82<br>
+    <a href="tel:090-1832-7342">090-1832-7342</a><br>
+    駐車場完備
+  </div>
+  <p class="footer-copy">&copy; さいたま浦和美園ピアノ教室</p>
+</footer>
+
+<script>
+const t=document.getElementById('navToggle'),l=document.getElementById('navLinks');
+t.addEventListener('click',()=>{l.classList.toggle('open');t.textContent=l.classList.contains('open')?'✕':'◈'});
+l.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>{l.classList.remove('open');t.textContent='◈'}));
+</script>
+</body>
+</html>
