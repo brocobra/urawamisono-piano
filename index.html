@@ -523,6 +523,64 @@ a:hover { color: var(--gold); }
 .footer-info a:hover { color: rgba(255,255,255,.9); }
 .footer-copy { font-size: .72rem; color: rgba(255,255,255,.35); }
 
+/* ── Gallery ── */
+.gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14px;
+  grid-auto-rows: 170px;
+  grid-auto-flow: dense;
+  max-width: var(--max-w-wide);
+  margin: 0 auto;
+}
+.gallery-item {
+  border-radius: 14px;
+  overflow: hidden;
+  position: relative;
+  opacity: 0;
+  transform: translateY(40px) rotate(var(--rot, 0deg));
+  cursor: pointer;
+  background: var(--warm-bg);
+  box-shadow: 0 2px 12px rgba(61,53,41,.08);
+  transition: box-shadow .4s ease, transform .5s ease;
+}
+.gallery-item:hover {
+  box-shadow: 0 12px 36px rgba(61,53,41,.18);
+  transform: rotate(0deg) scale(1.02) translateY(-4px);
+}
+.gallery-item img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  transition: transform .6s ease;
+  display: block;
+}
+.gallery-item:hover img {
+  transform: scale(1.06);
+}
+.gallery-item--tall { grid-row: span 2; }
+.gallery-item--wide { grid-column: span 2; }
+
+/* nth-based rotation offsets for organic feel */
+.gallery-item:nth-child(2)  { --rot: -1.2deg; }
+.gallery-item:nth-child(3)  { --rot: 1.5deg; }
+.gallery-item:nth-child(5)  { --rot: -0.8deg; }
+.gallery-item:nth-child(7)  { --rot: 1.1deg; }
+.gallery-item:nth-child(8)  { --rot: -1.4deg; }
+.gallery-item:nth-child(10) { --rot: 0.9deg; }
+
+/* placeholder for photos not yet added */
+.gallery-item--empty {
+  display: flex; align-items: center; justify-content: center;
+  background: linear-gradient(135deg, var(--warm-bg) 0%, var(--card-bg) 100%);
+  border: 1px dashed var(--border);
+}
+.gallery-item--empty::after {
+  content: attr(data-label);
+  font-size: .75rem;
+  color: var(--text-lighter);
+  letter-spacing: .06em;
+}
+
 /* ── Responsive ── */
 @media (max-width: 768px) {
   .nav-links { display: none; }
@@ -545,6 +603,10 @@ a:hover { color: var(--gold); }
   .hero { padding: 100px 20px 60px; }
   .blob-1, .blob-2, .blob-3 { display: none; }
   .contact-row { flex-direction: column; gap: 4px; }
+  .gallery-grid { grid-template-columns: repeat(2, 1fr); grid-auto-rows: 140px; gap: 10px; }
+  .gallery-item--tall { grid-row: span 2; }
+  .gallery-item--wide { grid-column: span 2; }
+  .gallery-item:nth-child(n) { --rot: 0deg; }
 }
 @media (max-width: 400px) {
   .hero-copy { font-size: 1.3rem; }
@@ -620,14 +682,43 @@ a:hover { color: var(--gold); }
   </div>
 </section>
 
-<!-- Classroom -->
+<!-- Classroom Gallery -->
 <section class="section section--alt" id="classroom">
-  <div class="section-inner">
+  <div class="section-inner" style="max-width:var(--max-w-wide);">
     <p class="section-label">CLASSROOM</p>
     <h2 class="section-title">教室のようす</h2>
     <div class="divider"></div>
-    <div style="max-width:680px; margin:0 auto; border-radius:16px; overflow:hidden; box-shadow:0 4px 24px rgba(61,53,41,.12); opacity:0; transform:translateY(24px);" class="classroom-photo">
-      <img src="home.jpg" alt="教室のようす" style="width:100%; display:block;">
+    <div class="gallery-grid">
+      <div class="gallery-item gallery-item--tall" data-label="教室のようす">
+        <img src="home.jpg" alt="教室のようす" loading="lazy">
+      </div>
+      <div class="gallery-item">
+        <img src="S__67403800_0.jpg" alt="レッスン風景" loading="lazy">
+      </div>
+      <div class="gallery-item">
+        <img src="S__67403801_0.jpg" alt="レッスン風景" loading="lazy">
+      </div>
+      <div class="gallery-item gallery-item--wide">
+        <img src="S__67403802_0.jpg" alt="レッスン風景" loading="lazy">
+      </div>
+      <div class="gallery-item">
+        <img src="S__67403803_0.jpg" alt="レッスン風景" loading="lazy">
+      </div>
+      <div class="gallery-item gallery-item--tall">
+        <img src="S__67403804_0.jpg" alt="レッスン風景" loading="lazy">
+      </div>
+      <div class="gallery-item">
+        <img src="S__67403796_0.jpg" alt="レッスン風景" loading="lazy">
+      </div>
+      <div class="gallery-item gallery-item--wide">
+        <img src="S__67403797_0.jpg" alt="レッスン風景" loading="lazy">
+      </div>
+      <div class="gallery-item">
+        <img src="S__67403798_0.jpg" alt="レッスン風景" loading="lazy">
+      </div>
+      <div class="gallery-item">
+        <img src="S__67403799_0.jpg" alt="レッスン風景" loading="lazy">
+      </div>
     </div>
   </div>
 </section>
@@ -894,10 +985,50 @@ function pageEntrance() {
 
 // ── Scroll Animations ──
 
-// Classroom photo
-gsap.to('.classroom-photo', {
-  scrollTrigger: { trigger: '.classroom-photo', start: 'top 80%' },
-  opacity: 1, y: 0, duration: .8, ease: 'power2.out',
+// Gallery items — staggered reveal + float + wobble
+document.querySelectorAll('.gallery-item img').forEach(img => {
+  img.addEventListener('error', () => {
+    img.style.display = 'none';
+    img.parentElement.classList.add('gallery-item--empty');
+  });
+});
+gsap.utils.toArray('.gallery-item').forEach((item, i) => {
+  const rot = parseFloat(getComputedStyle(item).getPropertyValue('--rot')) || 0;
+  gsap.from(item, {
+    scrollTrigger: { trigger: item, start: 'top 88%' },
+    opacity: 0,
+    y: 40 + (i % 3) * 15,
+    rotation: rot + gsap.utils.random(-4, 4),
+    scale: .92,
+    duration: .8,
+    delay: (i % 3) * .12,
+    ease: 'power2.out',
+    onComplete: () => {
+      gsap.set(item, { opacity: 1, y: 0, rotation: rot, scale: 1 });
+      // gentle drift
+      gsap.to(item, {
+        y: `random(-6, 6)`,
+        x: `random(-4, 4)`,
+        rotation: rot + `random(-1.5, 1.5)`,
+        duration: `random(3.5, 6)`,
+        repeat: -1,
+        yoyo: true,
+        ease: 'sine.inOut',
+      });
+    }
+  });
+  // parallax on scroll — items in different columns drift at different speeds
+  const col = i % 3;
+  gsap.to(item, {
+    scrollTrigger: {
+      trigger: item,
+      start: 'top bottom',
+      end: 'bottom top',
+      scrub: 1.5,
+    },
+    y: (col - 1) * -25,
+    ease: 'none',
+  });
 });
 
 // Teacher photo
